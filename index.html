@@ -226,17 +226,18 @@ impacts in parity-time reversal (PT) symmetry, optics, and nuclear physics.
             <div class="tile-back">quantum Deflated Resonance Identification Variational Quantum Eigensolver</div>
           </div>
         </div>
-        <div class="tile" data-title="VRP" data-html="In this research I was working on a well know NP-Hard problem, Vehicle Routing Problem and its variants with 
-		Capacity and time. We used VQE variants like Layered-VQE and Filtering-VQE. This was the <br>Mentor: Prof. Pawel Gora">
+        <div class="tile" data-title="VRP" data-html="I worked under Dr. Paweł Gora at the University of Warsaw as a research intern, focusing on applying Variational Quantum Eigensolver (VQE) methods to combinatorial optimization problems. My main project was on the Vehicle Routing Problem (VRP) and its variants, where I explored hybrid approaches such as Layered-VQE and Filtering-VQE. This work gave me early experience in bridging quantum algorithms with real-world optimization challenges.
+		The slides from that conference can be viewed <a href='https://www.informatyka.agh.edu.pl/media/uploads/kqis-55-pawel-gora-26-04-2022-slides.pdf' target='_blank' rel='noopener noreferrer'>here</a>. 
+		<br>Mentor: Prof. Pawel Gora">
           <div class="tile-inner">
-            <div class="tile-front"><h3>VPR</h3></div>
+            <div class="tile-front"><h3>VRP</h3></div>
             <div class="tile-back">Vehicle Routing Problem on a Quantum Computer</div>
           </div>
         </div>
         <div class="tile" data-title="Robotic Surgery" data-html="My aim was to develop an algorithm to calculate the shift in the position and orientation of the calyx between the pre-operative CT acquisition and the intra-operative patient orientation during the kidney stone removal surgery so that it can be taken into consideration by the robot arm during puncture process.
 For this I developed an algorithm, which generates the Digitally Rendered Radiograph of the input CT volume data at given angle of rotation of CT data.
-After the DRR generation the registration algorithm registers CARM and DRR to find the best possible pair with least error or maximum similarity so that the exact orientation of the calyx can be found out.
-Mentor: Rakesh Sharma">
+After the DRR generation the registration algorithm registers CARM and DRR to find the best possible pair with least error or maximum similarity so that the exact orientation of the calyx can be found out. A detailed report of this work can be found <a href='Files/comofi_report.pdf' target='_blank' rel='noopener noreferrer'>here</a>
+<br>Mentor: Rakesh Sharma">
           <div class="tile-inner">
             <div class="tile-front"><h3>Robotic Surgery</h3></div>
             <div class="tile-back">Autonomous Robotic Surgery for treating Kidney stones</div>
@@ -471,7 +472,7 @@ document.getElementById('modal').addEventListener('click', (e) => {
   const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.18);
 
   // Ribbon tube
-  const T_END = 0.90;                              // last planet's t
+  const T_END = 0.89;                              // last planet's t
   const SAMPLES = 200;
   const subPts = [];
   for (let i = 0; i <= SAMPLES; i++) {
