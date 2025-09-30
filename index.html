@@ -471,7 +471,7 @@ document.getElementById('modal').addEventListener('click', (e) => {
   const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.18);
 
   // Ribbon tube
-  const T_END = 0.91;                              // last planet's t
+  const T_END = 0.90;                              // last planet's t
   const SAMPLES = 200;
   const subPts = [];
   for (let i = 0; i <= SAMPLES; i++) {
