@@ -471,7 +471,7 @@ document.getElementById('modal').addEventListener('click', (e) => {
   const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.18);
 
   // Ribbon tube
-  const T_END = 0.89;                              // last planet's t
+  const T_END = 0.91;                              // last planet's t
   const SAMPLES = 200;
   const subPts = [];
   for (let i = 0; i <= SAMPLES; i++) {
@@ -617,13 +617,14 @@ document.getElementById('modal').addEventListener('click', (e) => {
 
   // Scroll progress
   function scrollProgress(){
-    const sc = window.scrollY || window.pageYOffset;
-    const top = sec.offsetTop;
-    const vh = window.innerHeight;
-    const span = sec.offsetHeight - vh;
-    if (span <= 0) return 0;
-    return Math.max(0, Math.min(1, (sc - top) / span));
-  }
+  const sc = window.scrollY || window.pageYOffset;
+  const top = sec.offsetTop;
+  const vh = window.innerHeight;
+  const span = sec.offsetHeight - vh;
+  if (span <= 0) return 0;
+  const raw = Math.max(0, Math.min(1, (sc - top) / span));
+  return raw * T_END; // cap at last planet
+}
 
   const PANELS = [
     { id:'p-start',     t:0.00 },
@@ -694,12 +695,14 @@ document.getElementById('modal').addEventListener('click', (e) => {
 
   // Jump buttons
   function scrollToT(t){
-    const top = sec.offsetTop;
-    const vh = window.innerHeight;
-    const span = sec.offsetHeight - vh;
-    const y = top + t * span;
-    window.scrollTo({ top: y, behavior: 'smooth' });
-  }
+  const top = sec.offsetTop;
+  const vh = window.innerHeight;
+  const span = sec.offsetHeight - vh;
+  // map desired t in [0, T_END] onto the full scroll span
+  const clamped = Math.max(0, Math.min(T_END, t));
+  const y = top + (clamped / T_END) * span;
+  window.scrollTo({ top: y, behavior: 'smooth' });
+}
   document.querySelectorAll('.jump').forEach(btn=>{
     btn.addEventListener('click', ()=>{
       const t = parseFloat(btn.dataset.target || '0');
