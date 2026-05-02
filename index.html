@@ -1,148 +1,587 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <meta charset="utf-8" />
-<meta name="description" content="PhD candidate at UW Madison. Quantum algorithms (ADAPT-VQE, BIQAE, NOQE), low-rank factorization (DF, THC), and error mitigation.">
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="description" content="PhD candidate at UW Madison. Quantum algorithms, quantum chemistry, BIQAE, qDRIVE, ADAPT-VQE, low-rank factorization, and error mitigation.">
 <link rel="canonical" href="https://atharva-vidwans.github.io/">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
 <title>Atharva Vidwans — Quantum Computing & Quantum Chemistry</title>
+
 <style>
   :root{
-    --bg:#070a12; --ink:#eaf2ff; --mut:#bcd0ff;
-    --card:rgba(12,14,24,.55); --line:rgba(255,255,255,.12);
-    --accent:#8db3ff; --shadow:0 12px 40px rgba(0,0,0,.45);
+    --bg:#0d1324;
+    --ink:#eaf2ff;
+    --mut:#bcd0ff;
+    --card:rgba(12,14,24,.58);
+    --line:rgba(255,255,255,.13);
+    --accent:#8db3ff;
+    --shadow:0 12px 40px rgba(0,0,0,.45);
   }
+  
 
-  html, body { margin:0; background:var(--bg); color:var(--ink); font:16px/1.55 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif; }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  html, body {
+    margin:0;
+     background:
+    radial-gradient(900px 500px at 20% 20%, rgba(141,179,255,.18), transparent 60%),
+    radial-gradient(1000px 500px at 80% 0%, rgba(141,179,255,.15), transparent 60%),
+    #0d1324;
+    color:var(--ink);
+    font:16px/1.55 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+  }
+  body { overflow-x:hidden; }
+  a { color:var(--accent); text-decoration:none; }
+  a:hover { text-decoration:underline; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
   header { margin: 8px 0 16px; opacity:.95; }
-  h1 { margin:0; font-weight:800; letter-spacing:.2px }
-  p.lead { margin:.25rem 0 0; color:var(--mut) }
+  header h1 { margin:0; font-weight:800; letter-spacing:.2px; text-align:center; }
+  header h3 { margin:.15rem 0 0; text-align:center; font-weight:600; color:var(--mut); }
 
-  /* Scroll section + scene window */
-  #scroll3d { position: relative; height: 650vh; z-index: 0; }
-  .pin {
-    position: sticky; top: 0; height: 78vh; min-height: 480px; border-radius: 16px;
-    border:1px solid var(--line); overflow:hidden; box-shadow: var(--shadow);
-    background: radial-gradient(1200px 420px at 75% -10%, rgba(141,179,255,.12), transparent 60%), var(--bg);
-    z-index: 0; /* base layer */
+  /* Visiting-card landing */
+  .hero {
+    min-height: 82vh;
+    display: grid;
+    place-items: center;
+    text-align: left;
+    padding: 42px 0 28px;
   }
+  .hero-card {
+    width: 750px;
+    border: 1px solid var(--line);
+    border-radius: 30px;
+    padding: clamp(26px, 5vw, 58px);
+    background:
+      radial-gradient(900px 420px at 85% 0%, rgba(141,179,255,.28), transparent 58%),
+		linear-gradient(135deg, rgba(255,255,255,.12), rgba(255,255,255,.05));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(12px);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-card::before {
+    content:"";
+    position:absolute;
+    inset: 18px;
+    border:1px solid rgba(255,255,255,.08);
+    border-radius: 24px;
+    pointer-events:none;
+  }
+  .visiting-card-grid {
+    display:grid;
+    grid-template-columns: 1fr;
+    gap: 28px;
+    align-items:center;
+    position:relative;
+    z-index:1;
+  }
+  .eyebrow {
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: .16em;
+    font-size: .82rem;
+    font-weight: 700;
+  }
+  .hero h1 {
+    font-size: clamp(2.6rem, 7vw, 5.7rem);
+    line-height: .92;
+    margin: 10px 0 14px;
+	white-space: nowrap;
+	font-size: clamp(2rem, 5vw, 5rem);
+  }
+  .hero p {
+    color: var(--mut);
+    font-size: clamp(1rem, 2vw, 1.2rem);
+    max-width: 710px;
+    margin: 0;
+  }
+  .card-role { color:#dbe8ff; font-size:1.05rem; margin-bottom: 16px; }
+  .contact-strip {
+  display: flex;
+  gap: 16px;
+  margin-top: 22px;
+  color: var(--mut);
+  align-items: center;
+  flex-wrap: nowrap;
+  font-weight: 500;
+}
+
+.contact-strip a {
+font-size: 1.6rem;
+  display: inline-flex;
+  align-items: center;
+  color: var(--ink);
+}
+
+  .monogram {
+    width: 230px;
+  opacity: 0.9;
+    aspect-ratio:1;
+    border-radius: 28px;
+    border:1px solid rgba(141,179,255,.32);
+    background:
+      radial-gradient(circle at 35% 30%, rgba(141,179,255,.42), transparent 38%),
+      linear-gradient(145deg, rgba(255,255,255,.12), rgba(255,255,255,.025));
+    display:grid;
+    place-items:center;
+    box-shadow: inset 0 0 60px rgba(141,179,255,.08), 0 20px 70px rgba(0,0,0,.35);
+    justify-self:end;
+  }
+  .monogram span {
+    font-size: clamp(4rem, 12vw, 7rem);
+    font-weight: 900;
+    letter-spacing:-.08em;
+    color:#f1f6ff;
+    text-shadow: 0 0 30px rgba(141,179,255,.35);
+  }
+  .choice-note { margin-top: 18px; color:#91a9df; font-size:.95rem; }
+
+  .hero-actions {
+    display:flex;
+    justify-content:flex-start;
+    gap: 14px;
+    flex-wrap:wrap;
+    margin-top: 28px;
+  }
+  .cta {
+    font: inherit;
+    cursor: pointer;
+    display:inline-flex;
+    align-items:center;
+    gap:.5rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    padding: .82rem 1.12rem;
+    color: var(--ink);
+    text-decoration:none;
+    background: rgba(255,255,255,.08);
+    box-shadow: 0 10px 28px rgba(0,0,0,.25);
+    transition: transform .15s ease, border-color .15s ease, background .15s ease;
+  }
+  .cta.primary {
+    background: linear-gradient(135deg, rgba(141,179,255,.32), rgba(255,255,255,.08));
+    border-color: rgba(141,179,255,.48);
+  }
+  .cta:hover {
+    text-decoration:none;
+    transform: translateY(-1px);
+    border-color: rgba(141,179,255,.45);
+  }
+
+  /* Mode gate */
+  body.choice-mode .quick-profile,
+  body.choice-mode #tiles,
+  body.choice-mode #contact,
+  body.choice-mode .journey-intro,
+  body.choice-mode #scroll3d { display:none; }
+
+  body.simple-mode .hero,
+  body.simple-mode .journey-intro,
+  body.simple-mode #scroll3d { display:none; }
+
+  body.interactive-mode .hero,
+  body.interactive-mode .quick-profile,
+  body.interactive-mode #tiles,
+  body.interactive-mode #contact { display:none; }
+
+  .mode-bar {
+    display:flex;
+    justify-content:center;
+    gap:12px;
+    flex-wrap:wrap;
+    margin: 0 0 22px;
+  }
+
+  /* Quick profile */
+  .quick-profile { scroll-margin-top: 24px; margin: 34px 0 72px; }
+  .section-head { text-align:center; margin-bottom: 22px; }
+  .section-head h2 { margin:0; font-size: clamp(1.8rem, 3.5vw, 2.8rem); }
+  .section-head p { color: var(--mut); max-width: 780px; margin: .45rem auto 0; }
+
+  .profile-grid { display:grid; grid-template-columns: 1.15fr .85fr; gap: 18px; }
+  .card {
+    border:1px solid var(--line);
+    border-radius: 20px;
+    padding: 20px;
+    background: linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.035));
+    box-shadow: var(--shadow);
+    backdrop-filter: blur(10px);
+  }
+  .card h3 { margin:0 0 .6rem; color: var(--accent); }
+  .card p { color:#cfe0ff; margin:.35rem 0; }
+
+  .tag-row { display:flex; gap:8px; flex-wrap:wrap; margin-top: 12px; }
+  .tag {
+    border:1px solid var(--line);
+    background:rgba(255,255,255,.06);
+    color:var(--mut);
+    border-radius:999px;
+    padding:.28rem .65rem;
+    font-size:.9rem;
+  }
+  .mini-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top:16px; }
+  .mini-card { min-height: 135px; }
+  .link-list { display:grid; gap:.45rem; margin-top:.5rem; }
+  .link-list a { display:inline-flex; gap:.45rem; align-items:center; }
+
+  /* Interactive journey */
+  .journey-intro {
+    text-align:center;
+    margin: 20px 0 18px;
+    scroll-margin-top: 24px;
+  }
+  .journey-intro p {
+    color: var(--mut);
+    margin:.35rem auto 0;
+    max-width:760px;
+  }
+
+#scroll3d {
+  position: relative;
+  height: 650vh;
+  z-index: 0;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+}
+.pin {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  min-height: 100vh;
+  width: 100vw;
+  margin-left: calc(50% - 50vw);
+  border-radius: 0;
+  border: none;
+  overflow: hidden;
+}
   #webgl {
-    width:100%; height:100%; display:block;
-    position: relative; z-index: 0;
-    pointer-events: none; /* let clicks pass through to HTML UI */
+    width:100%;
+    height:100%;
+    display:block;
+    position: relative;
+    z-index: 0;
+    pointer-events: none;
   }
-
-  /* Vignette (visual only) */
   .vignette {
-    position:absolute; inset:0; pointer-events:none; z-index:1;
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    z-index:1;
     background: radial-gradient(120% 120% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.18) 100%);
   }
 
-  /* ---------- Overlay & Panels: pass-through by default ---------- */
-
-  /* Overlay floats over the scene but lets clicks pass through by default */
   .overlay{
-    position:absolute; inset:0;
-    display:flex; flex-direction:column; justify-content:space-between;
+    position:absolute;
+    inset:0;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
     z-index:2;
     pointer-events:none;
   }
-
-  /* The empty wrapper should NOT catch clicks */
-  .panels{ pointer-events:none; }
-
-  /* Only the visible panel should be clickable, hidden ones must not block */
-  .panel { pointer-events:none; }        /* default: NO clicks on hidden panels */
-  .panel.show { pointer-events:auto; }   /* enable clicks only on the shown card */
-
-  /* HUD (buttons) */
   .hud {
-    pointer-events:auto; align-self:center; margin-top:12px;
-    border:1px solid var(--line); background:var(--card);
-    border-radius:12px; padding:8px 12px; box-shadow:var(--shadow); backdrop-filter: blur(8px);
-    font-size:.95rem; display:flex; gap:.6rem; flex-wrap:wrap; align-items:center;
+    pointer-events:auto;
+    align-self:center;
+    margin-top:12px;
+    border:1px solid var(--line);
+    background:var(--card);
+    border-radius:12px;
+    padding:8px 12px;
+    box-shadow:var(--shadow);
+    backdrop-filter: blur(8px);
+    font-size:.95rem;
+    display:flex;
+    gap:.6rem;
+    flex-wrap:wrap;
+    align-items:center;
+    max-width: calc(100% - 24px);
   }
-  .badge { border:1px solid var(--line); padding:.2rem .5rem; border-radius:8px; opacity:.95; background:rgba(255,255,255,.06) }
-  .jump { cursor:pointer; color:var(--ink); border:1px solid var(--line); padding:.25rem .55rem; border-radius:8px; background:rgba(255,255,255,.08); transition:transform .1s ease }
+  .jump {
+    cursor:pointer;
+    color:var(--ink);
+    border:1px solid var(--line);
+    padding:.25rem .55rem;
+    border-radius:8px;
+    background:rgba(255,255,255,.08);
+    transition:transform .1s ease;
+  }
   .jump:hover { transform: translateY(-1px); }
   .sp { opacity:.85 }
-  #pct { opacity:.9 }
 
-  /* Panels */
-  .panels { position:relative; width:100%; display:grid; place-items:center; margin-bottom:12px; }
-  .panel {
-    position:absolute; bottom:16px;
-    width:min(720px, 92%); text-align:left;
-    border:1px solid var(--line); background:var(--card); border-radius:14px;
-    padding:14px 16px; box-shadow:var(--shadow); backdrop-filter: blur(10px);
-    opacity:0; transform: translateY(10px) scale(.985); transition: opacity .35s ease, transform .35s ease;
+  .panels {
+    pointer-events:none;
+    position:relative;
+    width:100%;
+    display:grid;
+    place-items:center;
+    margin-bottom:12px;
   }
-  .panel.show { opacity:1; transform:none; }
-  .panel h3 { margin:.1rem 0 .35rem; letter-spacing:.2px }
-  .panel p { margin:.2rem 0 0; color:#cfe0ff }
-  .panel .actions { margin-top:.6rem; display:flex; gap:.5rem; flex-wrap:wrap }
-  .button { text-decoration:none; color:var(--ink); border:1px solid var(--line); padding:.35rem .7rem; border-radius:10px; background:rgba(255,255,255,.08) }
-  .accent { color:var(--accent) }
+  .journey-progress {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8px;
+  z-index: 5;
+  background: rgba(255,255,255,.10);
+}
 
-  footer { margin: 48px 0; text-align:center; opacity:.8 }
-  a { color:var(--accent); text-decoration:none }
-  a:hover{ text-decoration:underline }
+#journeyProgressFill {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg, #8db3ff, #dbe8ff);
+  box-shadow: 0 0 18px rgba(141,179,255,.85);
+  transition: width .12s linear;
+}
+  .panel {
+    pointer-events:none;
+    position:absolute;
+    bottom:16px;
+    width:min(720px, 92%);
+    text-align:left;
+    border:1px solid var(--line);
+    background:var(--card);
+    border-radius:14px;
+    padding:14px 16px;
+    box-shadow:var(--shadow);
+    backdrop-filter: blur(10px);
+    opacity:0;
+    transform: translateY(10px) scale(.985);
+    transition: opacity .35s ease, transform .35s ease;
+  }
+  .panel.show {
+    pointer-events:auto;
+    opacity:1;
+    transform:none;
+  }
+  .panel h3 { margin:.1rem 0 .35rem; letter-spacing:.2px; }
+  .panel p { margin:.2rem 0 0; color:#cfe0ff; }
+  .accent { color:var(--accent); }
 
   /* Tiles */
   .tile-grid {
-    display: flex; justify-content: center; gap: 24px; flex-wrap: wrap;
+    display: flex;
+    justify-content: center;
+    gap: 24px;
+    flex-wrap: wrap;
   }
   .tile { width: 180px; height: 180px; perspective: 1000px; }
-  .tile-inner { position: relative; width: 100%; height: 100%; text-align: center; transition: transform 0.6s; transform-style: preserve-3d; cursor: pointer; }
+  .tile-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    transition: transform 0.6s;
+    transform-style: preserve-3d;
+    cursor: pointer;
+  }
   .tile:hover .tile-inner { transform: rotateY(180deg); }
   .tile-front, .tile-back {
-    position: absolute; width: 100%; height: 100%; backface-visibility: hidden;
-    border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow);
-    display: flex; justify-content: center; align-items: center; background: var(--card);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    backface-visibility: hidden;
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--card);
+    padding: 12px;
   }
   .tile-front { color: var(--ink); }
-  .tile-back { transform: rotateY(180deg); background: var(--accent); color: #fff; }
+  .tile-back { transform: rotateY(180deg); background: rgba(141,179,255,.7); color: #fff; }
   .tile-back a { color: #fff; text-decoration: none; font-weight: bold; }
+
+  /* Contact */
+  .social-icons { display:flex; align-items:center; gap:14px; flex-wrap:wrap; }
+  .social-icons a {
+    width:42px;
+    height:42px;
+    display:inline-grid;
+    place-items:center;
+    border:1px solid var(--line);
+    border-radius: 12px;
+    background:rgba(255,255,255,.07);
+    color:var(--ink);
+    text-decoration:none;
+  }
+  .social-icons a:hover {
+    transform: translateY(-1px);
+    text-decoration:none;
+    color: var(--accent);
+  }
+  section#tiles, section#contact { position: relative; z-index: 1000; }
 
   /* Modal */
   .modal {
-    position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.85); display: none; justify-content: center; align-items: center; z-index: 9999;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.85);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+    padding: 20px;
   }
   .modal-content {
-    background: var(--card); padding: 24px; border-radius: 12px; max-width: 800px; width: 90%;
-    color: var(--ink); box-shadow: var(--shadow); text-align: left; position: relative;
+    background: rgba(12,14,24,.94);
+    border:1px solid var(--line);
+    padding: 24px;
+    border-radius: 16px;
+    max-width: 800px;
+    width: 90%;
+    color: var(--ink);
+    box-shadow: var(--shadow);
+    text-align: left;
+    position: relative;
+    max-height: 85vh;
+    overflow:auto;
   }
   .modal-content h2 { margin-top: 0; }
-  .modal-close { position: absolute; top: 10px; right: 15px; font-size: 1.5rem; cursor: pointer; color: var(--mut); }
+  .modal-close {
+    position: absolute;
+    top: 10px;
+    right: 15px;
+    font-size: 1.5rem;
+    cursor: pointer;
+    color: var(--mut);
+  }
 
-  /* Ensure sections below can sit above if needed */
-  section#tiles, section#contact { position: relative; z-index: 1000; } /* above scene+overlay */
+  @media (max-width: 820px){
+    .profile-grid,
+    .mini-grid,
+    .visiting-card-grid { grid-template-columns: 1fr; }
+    .hero { text-align:center; }
+    .hero p { margin:0 auto; }
+    .hero-actions { justify-content:center; }
+    
+    .monogram { justify-self:center; }
+    .hud {
+      max-height: 126px;
+      overflow:auto;
+      justify-content:center;
+    }
+    .pin {
+      height: 74vh;
+      min-height: 520px;
+    }
+  }
 </style>
-
 </head>
-<body>
+
+<body class="choice-mode">
   <div class="wrap">
-    <header>
-      <h1 style="text-align:center">ATHARVA VIDWANS</h1>
-      <h3 style="text-align:center">PORTFOLIO</h3>
-    </header>
+    
+
+    <section class="hero" aria-label="Portfolio entry options">
+      <div class="hero-card">
+        <div class="visiting-card-grid">
+          <div>
+            
+            <h1>Atharva Vidwans</h1>
+            <div class="card-role">PhD Student · Quantum information science · UW–Madison</div>
+            <p>Quantum algorithm development and resource estimation</p>
+            <div class="contact-strip">
+			<a href="mailto:avidwans@wisc.edu"><i class="fa-solid fa-envelope"></i></a>
+			<a href="https://github.com/Atharva-Vidwans" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i></a>
+			<a href="https://www.linkedin.com/in/atharva-vidwans-62739b169" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i></a>
+			<a href="https://atharvavidwans.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-medium"></i></a>
+			<a href="https://scholar.google.com/citations?hl=en&user=pbTSbaIAAAAJ" target="_blank"><i class="fa-solid fa-graduation-cap"></i></a>
+			</div>
+            <div class="hero-actions">
+              <button class="cta primary mode-select" data-mode="simple" type="button"><i class="fa-solid fa-bolt"></i> View Quick Profile</button>
+              <button class="cta mode-select" data-mode="interactive" type="button"><i class="fa-solid fa-rocket"></i> Enter Interactive Journey</button>
+              <a class="cta" href="Files/Resume.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-lines"></i> Resume</a>
+            </div>
+            <div class="choice-note">Choose the fast professional profile or the cinematic scroll-through version.</div>
+          </div>
+          
+        </div>
+      </div>
+    </section>
+
+    <section id="quick-profile" class="quick-profile" aria-label="Quick skimmable profile">
+      <div class="section-head">
+        <h2>Quick Profile</h2>
+        <p>For visitors who want the fast version: research focus, selected projects, papers, and contact links without going through the full scroll journey.</p>
+      </div>
+      <div class="mode-bar">
+        <button class="cta back-choice" type="button"><i class="fa-solid fa-arrow-left"></i> Back to choices</button>
+        <button class="cta mode-select" data-mode="interactive" type="button"><i class="fa-solid fa-rocket"></i> Switch to Interactive Journey</button>
+      </div>
+
+      <div class="profile-grid">
+        <article class="card">
+          <h3>Research Focus</h3>
+          <p>I work on quantum algorithms and quantum chemistry, with a focus on reducing quantum resources for molecular electronic structure calculations.</p>
+          <p>Current interests include double factorization, tensor hypercontraction, BIQAE, DB-QITE-style state preparation, compiler-aware circuit depth reduction, and fault-tolerant resource estimation.</p>
+          <div class="tag-row">
+            <span class="tag">Quantum Chemistry</span>
+            <span class="tag">BIQAE</span>
+            <span class="tag">ADAPT-VQE</span>
+            <span class="tag">DF / THC</span>
+            <span class="tag">Resource Estimation</span>
+          </div>
+        </article>
+        <aside class="card">
+          <h3>At a Glance</h3>
+          <p><strong>Role:</strong> PhD student, UW–Madison</p>
+          <p><strong>Advisor:</strong> Prof. Matthew Otten</p>
+          <p><strong>Background:</strong> Mechanical Engineering → Physics → Quantum Chemistry</p>
+          <p><strong>Location:</strong> Madison, Wisconsin</p>
+
+        </aside>
+      </div>
+
+      <div class="mini-grid">
+        <article class="card mini-card">
+          <h3>BIQAE</h3>
+          <p>Bayesian Iterative Quantum Amplitude Estimation for efficient amplitude and molecular energy estimation with rigorous intervals.</p>
+          <a href="https://arxiv.org/abs/2507.23074" target="_blank" rel="noopener noreferrer">Paper</a>
+        </article>
+        <article class="card mini-card">
+          <h3>qDRIVE</h3>
+          <p>Variational quantum algorithm for resonance states using complex absorbing potentials and pseudovariance.</p>
+          <a href="https://arxiv.org/abs/2511.15981" target="_blank" rel="noopener noreferrer">Paper</a>
+        </article>
+        <article class="card mini-card">
+          <h3>Selected Projects</h3>
+          <p>Vehicle routing with VQE/FVQE, robotic-surgery image registration, surface-code simulations, and quantum ML mini projects.</p>
+          <a href="#tiles">Explore projects</a>
+        </article>
+      </div>
+    </section>
+
+    <div id="journey" class="journey-intro">
+      <h2>Interactive Journey</h2>
+      <p>Scroll through the longer story behind my path into quantum computing and quantum chemistry.</p>
+      <div class="mode-bar" style="margin-top:16px">
+        <button class="cta back-choice" type="button"><i class="fa-solid fa-arrow-left"></i> Back to choices</button>
+        <button class="cta mode-select" data-mode="simple" type="button"><i class="fa-solid fa-bolt"></i> Switch to Quick Profile</button>
+      </div>
+    </div>
 
     <section id="scroll3d" aria-label="Scroll-driven 3D">
       <div class="pin">
         <canvas id="webgl"></canvas>
+		<div class="journey-progress">
+			<div id="journeyProgressFill"></div>
+		</div>
         <div class="vignette"></div>
 
-        <!-- UI -->
         <div class="overlay">
           <div class="hud">
             <span class="sp">Chapters:</span>
             <button class="jump" data-target="0.00">Start</button>
             <button class="jump" data-target="0.05">About Me</button>
             <button class="jump" data-target="0.17">Undergrad</button>
-            <button class="jump" data-target="0.29">Autonomous Robotic Surgery</button>
-            <button class="jump" data-target="0.41">Entry into Quantum Computing</button>
+            <button class="jump" data-target="0.29">Robotic Surgery</button>
+            <button class="jump" data-target="0.41">Quantum Entry</button>
             <button class="jump" data-target="0.53">Research Intern</button>
             <button class="jump" data-target="0.65">Masters</button>
             <button class="jump" data-target="0.77">PhD</button>
@@ -199,54 +638,42 @@ in quantum computing.</p></div>
       <div class="tile-grid">
         <div class="tile"
           data-title="BIQAE"
-          data-html="We establish a unified statistical framework that underscores the crucial role statistical inference plays in Quantum Amplitude Estimation (QAE), a task essential to fields ranging from chemistry to finance and machine learning. We use this framework to harness Bayesian statistics for improved measurement efficiency with rigorous interval estimates at all iterations of Iterative Quantum Amplitude Estimation. We demonstrate the resulting method, Bayesian Iterative Quantum Amplitude Estimation (BIQAE), accurately and efficiently estimates both quantum amplitudes and molecular ground-state energies to high accuracy, and show in analytic and numerical sample complexity analyses that BIQAE outperforms all other QAE approaches considered. Both rigorous mathematical proofs and numerical simulations conclusively indicate Bayesian statistics is the source of this advantage, a finding that invites further inquiry into the power of statistics to expedite the search for quantum utility. Paper can be found <a href='https://arxiv.org/abs/2507.23074' target='_blank' rel='noopener noreferrer'>here</a>.
-		  <br>Mentor: Prof. Yazhen Wang and Prof. Micheline Soley">
+          data-html="Bayesian Iterative Quantum Amplitude Estimation uses Bayesian inference to obtain rigorous interval estimates with fewer measurements. Paper: <a href='https://arxiv.org/abs/2507.23074' target='_blank' rel='noopener noreferrer'>arXiv</a>.<br><br>Mentors: Prof. Yazhen Wang and Prof. Micheline Soley">
           <div class="tile-inner">
-            <div class="tile-front">
-              <h3>BIQAE</h3>
-            </div>
-            <div class="tile-back">
-              Bayesian Iterative Quantum Amplitude Estimation
-            </div>
+            <div class="tile-front"><h3>BIQAE</h3></div>
+            <div class="tile-back">Bayesian Iterative Quantum Amplitude Estimation</div>
           </div>
         </div>
-        <div class="tile" data-title="qDRIVE" data-html="Many interesting problems in chemistry, from controlling the outcome of ultracold chemical
-reactions collisions to autoionizing electronic states, rely on the efficient computation of resonances,
-the complex-energy eigenstates of the Hamiltonian. Classical computing algorithms suffer from
-the curse of dimensionality, while current quantum algorithms require prior information, such as
-theta trajectories in complex scaling methods. We design a variational method using complex
-absorbing potentials that can be run with a low qubit and gate count on quantum computers. We
-introduce a novel metric, the“pseudovariance”, to determine the eigenstates of the non-Hermitian
-Hamiltonian, and present various methods to improve the accuracy and efficiency of the algorithm
-for use on near-term intermediate-scale quantum computers. More generally, the algorithm has
-the capabilities to calculate the eigenvalues of non-Hermitian Hamiltonians, suggesting ultimate
-impacts in parity-time reversal (PT) symmetry, optics, and nuclear physics. Paper can be found here <a href='https://arxiv.org/abs/2511.15981' target='_blank' rel='noopener noreferrer'>here</a>
-<br>Mentor: Prof. Micheline Soley">
+
+        <div class="tile"
+          data-title="qDRIVE"
+          data-html="qDRIVE is a variational quantum algorithm for resonance states using complex absorbing potentials and pseudovariance. Paper: <a href='https://arxiv.org/abs/2511.15981' target='_blank' rel='noopener noreferrer'>arXiv</a>.<br><br>Mentor: Prof. Micheline Soley">
           <div class="tile-inner">
             <div class="tile-front"><h3>qDRIVE</h3></div>
-            <div class="tile-back">quantum Deflated Resonance Identification Variational Quantum Eigensolver</div>
+            <div class="tile-back">Quantum Deflated Resonance Identification VQE</div>
           </div>
         </div>
-        <div class="tile" data-title="VRP" data-html="I worked under Dr. Paweł Gora at the University of Warsaw as a research intern, focusing on applying Variational Quantum Eigensolver (VQE) methods to combinatorial optimization problems. My main project was on the Vehicle Routing Problem (VRP) and its variants, where I explored hybrid approaches such as Layered-VQE and Filtering-VQE. This work gave me early experience in bridging quantum algorithms with real-world optimization challenges.
-		The slides from that conference can be viewed <a href='https://www.informatyka.agh.edu.pl/media/uploads/kqis-55-pawel-gora-26-04-2022-slides.pdf' target='_blank' rel='noopener noreferrer'>here</a>. 
-		<br>Mentor: Prof. Pawel Gora">
+
+        <div class="tile"
+          data-title="VRP"
+          data-html="Research internship with Dr. Paweł Gora at the University of Warsaw applying VQE/FVQE methods to the Vehicle Routing Problem. Slides: <a href='https://www.informatyka.agh.edu.pl/media/uploads/kqis-55-pawel-gora-26-04-2022-slides.pdf' target='_blank' rel='noopener noreferrer'>conference slides</a>.">
           <div class="tile-inner">
             <div class="tile-front"><h3>VRP</h3></div>
             <div class="tile-back">Vehicle Routing Problem on a Quantum Computer</div>
           </div>
         </div>
-        <div class="tile" data-title="Robotic Surgery" data-html="My aim was to develop an algorithm to calculate the shift in the position and orientation of the calyx between the pre-operative CT acquisition and the intra-operative patient orientation during the kidney stone removal surgery so that it can be taken into consideration by the robot arm during puncture process.
-For this I developed an algorithm, which generates the Digitally Rendered Radiograph of the input CT volume data at given angle of rotation of CT data.
-After the DRR generation the registration algorithm registers CARM and DRR to find the best possible pair with least error or maximum similarity so that the exact orientation of the calyx can be found out. A detailed report of this work can be found <a href='Files/comofi_report.pdf' target='_blank' rel='noopener noreferrer'>here</a>
-<br>Mentor: Rakesh Sharma">
+
+        <div class="tile"
+          data-title="Robotic Surgery"
+          data-html="Algorithmic work on estimating shifts in calyx position and orientation during kidney-stone removal surgery using DRR generation and image registration.">
           <div class="tile-inner">
             <div class="tile-front"><h3>Robotic Surgery</h3></div>
-            <div class="tile-back">Autonomous Robotic Surgery for treating Kidney stones</div>
+            <div class="tile-back">Autonomous Robotic Surgery for Kidney Stones</div>
           </div>
         </div>
       </div>
     </section>
-    
+
     <section id="contact" style="margin-top:24px;margin-bottom:60px">
       <h2>Contact</h2>
       <p style="color:#bcd0ff">EMAIL:
@@ -254,17 +681,15 @@ After the DRR generation the registration algorithm registers CARM and DRR to fi
         <a href="mailto:avidwans@wisc.edu">avidwans@wisc.edu</a>
       </p>
       <p style="color:#bcd0ff">PHONE: +1 (608)-895-1521</p>
-      <p style="color:#bcd0ff">
-        SOCIAL:   
-        <a href="https://www.linkedin.com/in/atharva-vidwans-62739b169" target="_blank"><i class="fa-brands fa-linkedin"></i></a>&nbsp;&nbsp;
-        <a href="https://github.com/Atharva-Vidwans" target="_blank"><i class="fa-brands fa-github"></i></a>&nbsp;&nbsp;
-        <a href="https://medium.com/@atharvavidwans" target="_blank"><i class="fa-brands fa-medium"></i></a>
-      </p>
+      <div class="social-icons" aria-label="Social links">
+        <span style="color:#bcd0ff">SOCIAL:</span>
+        <a href="https://www.linkedin.com/in/atharva-vidwans-62739b169" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
+        <a href="https://github.com/Atharva-Vidwans" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
+        <a href="https://medium.com/@atharvavidwans" target="_blank" rel="noopener noreferrer" aria-label="Medium"><i class="fa-brands fa-medium"></i></a>
+      </div>
     </section>
   </div>
 
-  <script src="https://unpkg.com/three@0.159.0/build/three.min.js"></script>
-  
   <div class="modal" id="modal">
     <div class="modal-content">
       <span class="modal-close" id="modalClose">&times;</span>
@@ -272,446 +697,412 @@ After the DRR generation the registration algorithm registers CARM and DRR to fi
       <p id="modalText">This is where more detailed information will appear.</p>
     </div>
   </div>
-<script>
-// Attach click to each tile
-document.querySelectorAll('.tile').forEach(tile => {
-  tile.addEventListener('click', (e) => {
-    // If the user clicked a real link inside the tile, don't intercept
-    if (e.target.closest('a')) return;
 
-    const title = tile.dataset.title || tile.querySelector('h3')?.textContent || 'Project';
-    const html  = tile.dataset.html  || 'Details coming soon.';
+  <script src="https://unpkg.com/three@0.159.0/build/three.min.js"></script>
 
-    document.getElementById('modalTitle').textContent = title;
-    document.getElementById('modalText').innerHTML   = html;
-    document.getElementById('modal').style.display   = 'flex';
-  });
-});
-
-// Close button
-document.getElementById('modalClose').addEventListener('click', () => {
-  document.getElementById('modal').style.display = 'none';
-});
-
-// Close when clicking outside content
-document.getElementById('modal').addEventListener('click', (e) => {
-  if (e.target.id === 'modal') {
-    document.getElementById('modal').style.display = 'none';
-  }
-});
-</script>
-
-<script>
-(function(){
-  const canvas = document.getElementById('webgl');
-  const sec    = document.getElementById('scroll3d');
-  const pctEl  = document.getElementById('pct');
-  const spotEl = document.getElementById('spot');
-
-  // Renderer / Scene / Camera
-  const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
-  renderer.setPixelRatio(Math.min(window.devicePixelRatio||1, 1.75)); // cap for perf
-  renderer.outputColorSpace = THREE.SRGBColorSpace;
-  renderer.toneMapping = THREE.ACESFilmicToneMapping;
-  renderer.toneMappingExposure = 1.1;
-
-  const scene = new THREE.Scene();
-  scene.fog = new THREE.FogExp2(0x0a1020, 0.010);
-
-  const camera = new THREE.PerspectiveCamera(60, 1, 0.1, 4000);
-
-  // Lighting: hemisphere + key (moon-ish)
-  scene.add(new THREE.HemisphereLight(0x6f92ff, 0x0f1422, 0.35));
-  const key = new THREE.DirectionalLight(0xcfd9ff, 0.9);
-  key.position.set(120, 200, 80); scene.add(key);
-
-  // Utility: round glow sprite texture
-  function makeRoundSprite(size=256, color='255,255,255', inner=1, outer=0){
-    const c=document.createElement('canvas'); c.width=c.height=size;
-    const x=c.getContext('2d');
-    const g=x.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
-    g.addColorStop(0, `rgba(${color},${inner})`);
-    g.addColorStop(1, `rgba(${color},${outer})`);
-    x.fillStyle=g; x.fillRect(0,0,size,size);
-    const t=new THREE.CanvasTexture(c);
-    t.minFilter=THREE.LinearFilter; t.magFilter=THREE.LinearFilter;
-    return t;
-  }
-
-  // Sky gradient dome
-  const skyGeo = new THREE.SphereGeometry(3000, 32, 16);
-  const skyMat = new THREE.ShaderMaterial({
-    side: THREE.BackSide, depthWrite:false,
-    uniforms:{ top:{value:new THREE.Color(0x162b60)}, bottom:{value:new THREE.Color(0x070a12)} },
-    vertexShader:`varying vec3 vPos; void main(){ vPos=position; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
-    fragmentShader:`varying vec3 vPos; uniform vec3 top; uniform vec3 bottom;
-      void main(){ float h = normalize(vPos).y*0.5+0.5; gl_FragColor = vec4(mix(bottom, top, pow(h,1.3)), 1.0); }`
-  });
-  scene.add(new THREE.Mesh(skyGeo, skyMat));
-
-  // Animated Nebula (camera-facing billboard)
-  const nebGeo = new THREE.PlaneGeometry(3200, 1800, 1, 1);
-  const nebMat = new THREE.ShaderMaterial({
-    transparent:true, depthWrite:false, depthTest:false, blending:THREE.AdditiveBlending,
-    uniforms:{
-      uTime:{value:0},
-      uTintA:{value:new THREE.Color(0x214e9a)},
-      uTintB:{value:new THREE.Color(0x8cabff)},
-      uAlpha:{value:0.22}
-    },
-    vertexShader:`varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
-    fragmentShader:`
-      varying vec2 vUv; uniform float uTime; uniform vec3 uTintA; uniform vec3 uTintB; uniform float uAlpha;
-      float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1,311.7)))*43758.5453); }
-      float noise(vec2 p){
-        vec2 i=floor(p), f=fract(p);
-        float a=hash(i), b=hash(i+vec2(1,0)), c=hash(i+vec2(0,1)), d=hash(i+vec2(1,1));
-        vec2 u=f*f*(3.0-2.0*f);
-        return mix(mix(a,b,u.x), mix(c,d,u.x), u.y);
-      }
-      float fbm(vec2 p){
-        float v=0.0; float a=0.5;
-        for(int i=0;i<5;i++){ v += a*noise(p); p*=2.03; a*=0.55; }
-        return v;
-      }
-      void main(){
-        vec2 uv = vUv * 3.0;
-        uv.x += uTime*0.02; uv.y += sin(uTime*0.07)*0.2;
-        float n = fbm(uv) * 0.9;
-        vec3 col = mix(uTintA, uTintB, smoothstep(0.2,0.9,n));
-        float alpha = smoothstep(0.25,0.95,n) * uAlpha;
-        gl_FragColor = vec4(col, alpha);
-      }`
-  });
-  const neb = new THREE.Mesh(nebGeo, nebMat);
-  scene.add(neb);
-  const NEB_DIST = 1200; // keep billboard this far in front of camera
-
-  // Twinkling Stars (shader points)
-  const STARS = 3200;
-  const starGeo = new THREE.BufferGeometry();
-  const starPos = new Float32Array(STARS*3);
-  const starSize = new Float32Array(STARS);
-  for(let i=0;i<STARS;i++){
-    starPos[i*3+0] = (Math.random()-0.5)*2600;
-    starPos[i*3+1] = Math.random()*1200 - 100;
-    starPos[i*3+2] = (Math.random()-0.5)*2600;
-    starSize[i] = 5 + Math.random()*6;
-  }
-  starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
-  starGeo.setAttribute('aSize', new THREE.BufferAttribute(starSize, 1));
-  const starMat = new THREE.ShaderMaterial({
-    vertexColors:false, transparent:true, depthWrite:false, blending:THREE.AdditiveBlending,
-    uniforms:{ uTime:{value:0}, uTex:{value:makeRoundSprite(128, '255,255,255', 1, 0)} },
-    vertexShader:`
-      attribute float aSize; varying float vBlink; uniform float uTime;
-      void main(){
-        vBlink = 0.5 + 0.5*sin(uTime*2.0 + position.x*0.02 + position.z*0.03);
-        vec4 mv = modelViewMatrix * vec4(position, 1.0);
-        gl_PointSize = aSize * (300.0 / -mv.z);
-        gl_Position = projectionMatrix * mv;
-      }`,
-    fragmentShader:`
-      uniform sampler2D uTex; varying float vBlink;
-      void main(){
-        vec4 c = texture2D(uTex, gl_PointCoord);
-        c.rgb *= mix(0.8, 1.4, vBlink);
-        gl_FragColor = vec4(c.rgb, c.a);
-      }`
-  });
-  const stars = new THREE.Points(starGeo, starMat);
-  scene.add(stars);
-
-  // Foreground dust (parallax)
-  const dustCount = 1200;
-  const dustGeo = new THREE.BufferGeometry();
-  const dustPos = new Float32Array(dustCount*3);
-  for(let i=0;i<dustCount;i++){
-    dustPos[i*3+0] = (Math.random()-0.5)*1600;
-    dustPos[i*3+1] = Math.random()*400 - 60;
-    dustPos[i*3+2] = (Math.random()-0.5)*1600;
-  }
-  dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos, 3));
-  const dustMat = new THREE.PointsMaterial({
-    map: makeRoundSprite(64, '180,220,255', 0.9, 0),
-    color: 0xaed1ff, size: 3.0, sizeAttenuation:true, transparent:true, depthWrite:false, opacity:0.35,
-    blending: THREE.AdditiveBlending
-  });
-  const dust = new THREE.Points(dustGeo, dustMat);
-  dust.position.z = -50;
-  scene.add(dust);
-
-  // Shooting stars (rare streaks)
-  const streakGroup = new THREE.Group(); scene.add(streakGroup);
-  function spawnStreak(){
-    const geom = new THREE.BufferGeometry().setFromPoints([
-      new THREE.Vector3(0,0,0), new THREE.Vector3(0,0,-18)
-    ]);
-    const mat = new THREE.LineBasicMaterial({ color: 0x9ecbff, transparent:true, opacity:1 });
-    const line = new THREE.Line(geom, mat);
-    line.position.set((Math.random()-0.5)*800, Math.random()*180+40, camera.position.z - 200);
-    line.userData.v = new THREE.Vector3((Math.random()-0.5)*0.8, -(Math.random()*0.2+0.1), - (Math.random()*2.0+2.5));
-    line.userData.life = 1.2;
-    streakGroup.add(line);
-  }
-  let streakTimer = 0;
-
-  // Path & waypoints
-  const pts = [
-    new THREE.Vector3(  0,  8,   70),
-    new THREE.Vector3( 24, 12,   20),
-    new THREE.Vector3( -6, 16,  -25),
-    new THREE.Vector3(-34, 14,  -70),
-    new THREE.Vector3(-10, 12, -110),
-    new THREE.Vector3( 36, 10, -150),
-    new THREE.Vector3( 14, 12, -190),
-    new THREE.Vector3(-28, 11, -235),
-    new THREE.Vector3(-12, 14, -285),
-    new THREE.Vector3( 22, 12, -330)
-  ];
-  const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.18);
-
-  // Ribbon tube
-  const T_END = 0.89;                              // last planet's t
-  const SAMPLES = 200;
-  const subPts = [];
-  for (let i = 0; i <= SAMPLES; i++) {
-    const t = (i / SAMPLES) * T_END;
-    subPts.push(curve.getPointAt(t));
-  }
-  const subCurve = new THREE.CatmullRomCurve3(subPts, false, 'catmullrom', 0.18);
-  const tube = new THREE.TubeGeometry(subCurve, Math.ceil(320 * T_END), 0.35, 8, false);
-  const ribbon = new THREE.Mesh(
-    tube,
-    new THREE.MeshBasicMaterial({ color:0x5c88ff, transparent:true, opacity:0.18 })
-  );
-  scene.add(ribbon);
-
-  // Planets + rings + halos
-  function makePlanetTexture(size = 512, hue = 210) {
-    const c = document.createElement('canvas'); c.width = c.height = size;
-    const ctx = c.getContext('2d');
-    ctx.fillStyle = `hsl(${hue},45%,32%)`; ctx.fillRect(0, 0, size, size);
-    const img = ctx.createImageData(size, size); const d = img.data;
-    const h = hue/360;
-    const h2rgb = t => { if (t < 0) t += 1; if (t > 1) t -= 1;
-      if (t < 1/6) return t*6; if (t < 1/2) return 1; if (t < 2/3) return (2/3 - t)*6; return 0; };
-    for (let y = 0; y < size; y++) {
-      const v = (y/size)*2 - 1;
-      const pole = 0.85 + 0.15*(1 - Math.abs(v));
-      for (let x = 0; x < size; x++) {
-        const u = (x/size) * Math.PI * 2.0;
-        const b1 = Math.sin(u + 1.6*Math.sin(1.2*v));
-        const b2 = Math.sin(u*2.3 + 0.9*v + 0.8*Math.sin(2.1*v));
-        const b3 = Math.sin(u*3.7 + 1.5*v + 0.5*Math.sin(1.7*v));
-        const n  = 0.5*(b1*0.55 + b2*0.3 + b3*0.15) + 0.5;
-        const sat = 45 + Math.round(n*28);
-        const lig = Math.round((30 + n*42) * pole);
-        const s = sat/100, l = lig/100;
-        const q = l < 0.5 ? l*(1+s) : l + s - l*s;
-        const p = 2*l - q;
-        const r = Math.round((p + (q-p)*h2rgb(h + 1/3))*255);
-        const g = Math.round((p + (q-p)*h2rgb(h      ))*255);
-        const b = Math.round((p + (q-p)*h2rgb(h - 1/3))*255);
-        const i = (y*size + x)*4;
-        d[i+0]=r; d[i+1]=g; d[i+2]=b; d[i+3]=255;
-      }
-    }
-    for (let y = 0; y < size; y++) {
-      const i0 = (y*size + 0)*4;
-      const i1 = (y*size + (size-1))*4;
-      d[i1+0]=d[i0+0]; d[i1+1]=d[i0+1]; d[i1+2]=d[i0+2]; d[i1+3]=255;
-    }
-    ctx.putImageData(img, 0, 0);
-    const tex = new THREE.CanvasTexture(c);
-    tex.colorSpace = THREE.SRGBColorSpace;
-    tex.generateMipmaps = true;
-    tex.minFilter = THREE.LinearMipMapLinearFilter;
-    tex.magFilter = THREE.LinearFilter;
-    tex.wrapS = THREE.RepeatWrapping;
-    tex.wrapT = THREE.ClampToEdgeWrapping;
-    tex.offset.x = -0.5 / size;
-    tex.repeat.x = size / (size - 1);
-    return tex;
-  }
-
-  const planetGeo = new THREE.SphereGeometry(2.2, 48, 32);
-  const halos = [];
-  const rings = [];
-  const planets = [];
-  const PLANET_TS = [0.05, 0.17, 0.29, 0.41, 0.53, 0.65, 0.77, 0.89];
-
-  PLANET_TS.forEach((t, i) => {
-    const p = curve.getPointAt(t);
-    const hue = 200 + i * 18;
-    const tex = makePlanetTexture(512, hue);
-
-    const planet = new THREE.Mesh(
-      planetGeo,
-      new THREE.MeshStandardMaterial({
-        map: tex,
-        roughness: 0.7,
-        metalness: 0.0,
-        emissive: new THREE.Color(0x000000),
-        envMapIntensity: 0.3
-      })
-    );
-    planet.position.copy(p);
-    planet.userData.spin = 0.002 + Math.random() * 0.002;
-
-    const scale = 1 + (Math.sin(i * 1.3) * 0.25);
-    planet.scale.setScalar(scale);
-
-    scene.add(planet);
-    planets.push(planet);
-
-    if (i % 2 === 1) {
-      const ringGeo = new THREE.RingGeometry(3.2 * scale, 4.6 * scale, 64, 1);
-      const ringMat = new THREE.MeshBasicMaterial({
-        color: 0x7aa0ff,
-        transparent: true,
-        opacity: 0.18,
-        side: THREE.DoubleSide
-      });
-      const ring = new THREE.Mesh(ringGeo, ringMat);
-      ring.position.copy(p);
-      ring.rotation.x = Math.PI / 2.1;
-      scene.add(ring);
-      rings.push(ring);
+  <script>
+  // Choice gate
+  (function(){
+    function setMode(mode){
+      document.body.classList.remove('choice-mode', 'simple-mode', 'interactive-mode');
+      document.body.classList.add(mode + '-mode');
+      const target = mode === 'simple' ? document.getElementById('quick-profile') : document.getElementById('journey');
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
     }
 
-    const halo = new THREE.Sprite(
-      new THREE.SpriteMaterial({
-        map: makeRoundSprite(512, '120,170,255', 0.14, 0),
-        color: 0x7aa0ff,
-        transparent: true,
-        depthWrite: false,
-        opacity: 0.85,
-        blending: THREE.AdditiveBlending
-      })
-    );
-    halo.scale.set(26 * scale, 26 * scale, 1);
-    halo.position.copy(p);
-    scene.add(halo);
-    halos.push({ halo, base: 26 * scale + Math.random() * 6 });
-  });
-
-  // Camera frame along path
-  function getCameraFrame(t){
-    const p = curve.getPointAt(t);
-    const ahead = curve.getPointAt(Math.min(1, t + 0.02));
-    const dir = ahead.clone().sub(p).normalize();
-    const up = new THREE.Vector3(0,1,0);
-    const eye = p.clone().add(new THREE.Vector3(0, 3.2, 0));
-    return { position: eye, target: p.clone().add(dir).setY(eye.y - 0.1), up };
-  }
-
-  // Resize
-  function onResize(){
-    const rect = canvas.getBoundingClientRect();
-    const w = rect.width || canvas.parentElement.clientWidth;
-    const h = rect.height || canvas.parentElement.clientHeight;
-    renderer.setSize(w, h, false);
-    camera.aspect = w / h; camera.updateProjectionMatrix();
-  }
-  onResize(); window.addEventListener('resize', onResize);
-
-  // Scroll progress
-  function scrollProgress(){
-  const sc = window.scrollY || window.pageYOffset;
-  const top = sec.offsetTop;
-  const vh = window.innerHeight;
-  const span = sec.offsetHeight - vh;
-  if (span <= 0) return 0;
-  const raw = Math.max(0, Math.min(1, (sc - top) / span));
-  return raw * T_END; // cap at last planet
-}
-
-  const PANELS = [
-    { id:'p-start',     t:0.00 },
-    { id:'p-about',     t:0.05 },
-    { id:'p-undergrad', t:0.17 },
-    { id:'p-robotic',   t:0.29 },
-    { id:'p-quantum',   t:0.41 },
-    { id:'p-mini',      t:0.53 },
-    { id:'p-ms',        t:0.65 },
-    { id:'p-phd',       t:0.77 },
-    { id:'p-future',    t:0.89 }
-  ];
-  const panelEls = Object.fromEntries(PANELS.map(p => [p.id, document.getElementById(p.id)]));
-
-  function setPanelVisibility(t){
-    let nearest = PANELS[0], best = 9;
-    for (const p of PANELS) {
-      const d = Math.abs(t - p.t);
-      if (d < best){ best = d; nearest = p; }
-    }
-    for (const p of PANELS) {
-      panelEls[p.id]?.classList.toggle('show', p.id === nearest.id);
-    }
-  }
-
-  // Animate
-  let tCurrent = 0, time=0;
-  function animate(){
-    requestAnimationFrame(animate);
-    const tTarget = scrollProgress();
-    tCurrent += (tTarget - tCurrent) * 0.08;
-    time += 0.016;
-
-    // Move billboard nebula in front of camera and face it
-    neb.position.copy(camera.position)
-      .add(new THREE.Vector3(0,0,-NEB_DIST).applyQuaternion(camera.quaternion));
-    neb.quaternion.copy(camera.quaternion);
-    nebMat.uniforms.uTime.value = time;
-
-    // Subtle scene motion
-    stars.rotation.y += 0.00025;
-    dust.rotation.y  += 0.00015;
-
-    // Star twinkle time
-    starMat.uniforms.uTime.value = time;
-
-    // Halo pulsing & planet spin
-    for(const h of halos){
-      h.halo.scale.setScalar( h.base + Math.sin(time*1.2)*0.8 );
-    }
-    for(const p of planets){ p.rotation.y += p.userData.spin; }
-
-    const frame = getCameraFrame(tCurrent);
-    camera.position.copy(frame.position);
-    camera.up.copy(frame.up);
-    camera.lookAt(frame.target);
-
-    setPanelVisibility(tCurrent);
-    if (pctEl) pctEl.textContent = Math.round(tCurrent*100)+'%';
-
-    renderer.render(scene, camera);
-  }
-  requestAnimationFrame(animate);
-
-  // Init camera
-  const f0 = getCameraFrame(0);
-  camera.position.copy(f0.position); camera.lookAt(f0.target);
-
-  // Jump buttons
-  function scrollToT(t){
-  const top = sec.offsetTop;
-  const vh = window.innerHeight;
-  const span = sec.offsetHeight - vh;
-  // map desired t in [0, T_END] onto the full scroll span
-  const clamped = Math.max(0, Math.min(T_END, t));
-  const y = top + (clamped / T_END) * span;
-  window.scrollTo({ top: y, behavior: 'smooth' });
-}
-  document.querySelectorAll('.jump').forEach(btn=>{
-    btn.addEventListener('click', ()=>{
-      const t = parseFloat(btn.dataset.target || '0');
-      scrollToT(t);
+    document.querySelectorAll('.mode-select').forEach(btn => {
+      btn.addEventListener('click', () => setMode(btn.dataset.mode));
     });
-  });
-})();
-</script>
+
+    document.querySelectorAll('.back-choice').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.body.classList.remove('simple-mode', 'interactive-mode');
+        document.body.classList.add('choice-mode');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
+      });
+    });
+  })();
+  </script>
+
+  <script>
+  // Project tile modal
+  (function(){
+    document.querySelectorAll('.tile').forEach(tile => {
+      tile.addEventListener('click', (e) => {
+        if (e.target.closest('a')) return;
+        const title = tile.dataset.title || tile.querySelector('h3')?.textContent || 'Project';
+        const html  = tile.dataset.html  || 'Details coming soon.';
+        document.getElementById('modalTitle').textContent = title;
+        document.getElementById('modalText').innerHTML = html;
+        document.getElementById('modal').style.display = 'flex';
+      });
+    });
+
+    document.getElementById('modalClose').addEventListener('click', () => {
+      document.getElementById('modal').style.display = 'none';
+    });
+
+    document.getElementById('modal').addEventListener('click', (e) => {
+      if (e.target.id === 'modal') document.getElementById('modal').style.display = 'none';
+    });
+  })();
+  </script>
+
+  <script>
+  // Interactive Three.js journey
+  (function(){
+    const canvas = document.getElementById('webgl');
+    const sec = document.getElementById('scroll3d');
+    if (!canvas || !sec || !window.THREE) return;
+
+    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
+    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
+    renderer.outputColorSpace = THREE.SRGBColorSpace;
+    renderer.toneMapping = THREE.ACESFilmicToneMapping;
+    renderer.toneMappingExposure = 1.15;
+
+    const scene = new THREE.Scene();
+    scene.fog = new THREE.FogExp2(0x070a12, 0.010);
+
+    const camera = new THREE.PerspectiveCamera(62, 1, 0.1, 4000);
+    scene.add(new THREE.HemisphereLight(0x89aaff, 0x07101f, 0.55));
+
+    const key = new THREE.DirectionalLight(0xeaf2ff, 1.1);
+    key.position.set(80, 140, 100);
+    scene.add(key);
+
+    function makeRoundSprite(size=256, color='255,255,255', inner=1, outer=0){
+      const c = document.createElement('canvas');
+      c.width = c.height = size;
+      const ctx = c.getContext('2d');
+      const g = ctx.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
+      g.addColorStop(0, `rgba(${color},${inner})`);
+      g.addColorStop(1, `rgba(${color},${outer})`);
+      ctx.fillStyle = g;
+      ctx.fillRect(0,0,size,size);
+      const tex = new THREE.CanvasTexture(c);
+      tex.minFilter = THREE.LinearFilter;
+      tex.magFilter = THREE.LinearFilter;
+      return tex;
+    }
+
+    function makePlanetTexture(size=512, hue=210){
+      const c = document.createElement('canvas');
+      c.width = c.height = size;
+      const ctx = c.getContext('2d');
+
+      const grad = ctx.createRadialGradient(size*.34, size*.30, 10, size*.5, size*.5, size*.75);
+      grad.addColorStop(0, `hsl(${hue}, 85%, 78%)`);
+      grad.addColorStop(.45, `hsl(${hue}, 65%, 45%)`);
+      grad.addColorStop(1, `hsl(${hue+22}, 70%, 18%)`);
+      ctx.fillStyle = grad;
+      ctx.fillRect(0,0,size,size);
+
+      ctx.globalAlpha = .23;
+      for(let y=0; y<size; y+=18){
+        ctx.fillStyle = `hsl(${hue + Math.sin(y*.045)*28}, 80%, ${45 + Math.sin(y*.085)*14}%)`;
+        ctx.fillRect(0, y + Math.sin(y*.08)*10, size, 5 + Math.random()*11);
+      }
+
+      ctx.globalAlpha = .17;
+      for(let i=0; i<90; i++){
+        ctx.beginPath();
+        ctx.arc(Math.random()*size, Math.random()*size, Math.random()*2.7 + .8, 0, Math.PI*2);
+        ctx.fillStyle = `hsl(${hue+10}, 90%, 85%)`;
+        ctx.fill();
+      }
+
+      ctx.globalAlpha = 1;
+      const tex = new THREE.CanvasTexture(c);
+      tex.colorSpace = THREE.SRGBColorSpace;
+	  
+      return tex;
+    }
+
+    // Sky dome
+    const sky = new THREE.Mesh(
+      new THREE.SphereGeometry(3000, 32, 16),
+      new THREE.ShaderMaterial({
+        side: THREE.BackSide,
+        depthWrite:false,
+        uniforms:{
+          top:{value:new THREE.Color(0x162b60)},
+          bottom:{value:new THREE.Color(0x070a12)}
+        },
+        vertexShader:`varying vec3 vPos;
+          void main(){
+            vPos=position;
+            gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);
+          }`,
+        fragmentShader:`varying vec3 vPos;
+          uniform vec3 top;
+          uniform vec3 bottom;
+          void main(){
+            float h=normalize(vPos).y*.5+.5;
+            gl_FragColor=vec4(mix(bottom, top, pow(h,1.35)),1.0);
+          }`
+      })
+    );
+    scene.add(sky);
+
+    // Stars
+    const STARS = 3400;
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(STARS*3);
+    const starSize = new Float32Array(STARS);
+    for(let i=0;i<STARS;i++){
+      starPos[i*3] = (Math.random()-.5)*2500;
+      starPos[i*3+1] = Math.random()*1150 - 100;
+      starPos[i*3+2] = (Math.random()-.5)*2500;
+      starSize[i] = 4 + Math.random()*8;
+    }
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos,3));
+    starGeo.setAttribute('aSize', new THREE.BufferAttribute(starSize,1));
+
+    const starMat = new THREE.ShaderMaterial({
+      transparent:true,
+      depthWrite:false,
+      blending:THREE.AdditiveBlending,
+      uniforms:{
+        uTime:{value:0},
+        uTex:{value:makeRoundSprite(128,'255,255,255',1,0)}
+      },
+      vertexShader:`attribute float aSize;
+        varying float vBlink;
+        uniform float uTime;
+        void main(){
+          vBlink=.55+.45*sin(uTime*2.0+position.x*.02+position.z*.025);
+          vec4 mv=modelViewMatrix*vec4(position,1.0);
+          gl_PointSize=aSize*(300.0/-mv.z);
+          gl_Position=projectionMatrix*mv;
+        }`,
+      fragmentShader:`uniform sampler2D uTex;
+        varying float vBlink;
+        void main(){
+          vec4 c=texture2D(uTex, gl_PointCoord);
+          gl_FragColor=vec4(c.rgb*(.8+.65*vBlink), c.a);
+        }`
+    });
+
+    const stars = new THREE.Points(starGeo, starMat);
+    scene.add(stars);
+
+    // Light dust
+    const dustCount = 900;
+    const dustGeo = new THREE.BufferGeometry();
+    const dustPos = new Float32Array(dustCount*3);
+    for(let i=0;i<dustCount;i++){
+      dustPos[i*3] = (Math.random()-.5)*1200;
+      dustPos[i*3+1] = Math.random()*550 - 80;
+      dustPos[i*3+2] = (Math.random()-.5)*1200;
+    }
+    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos,3));
+    const dust = new THREE.Points(
+      dustGeo,
+      new THREE.PointsMaterial({
+        map: makeRoundSprite(64, '180,220,255', .75, 0),
+        color:0xaed1ff,
+        size:2.7,
+        transparent:true,
+        opacity:.28,
+        depthWrite:false,
+        blending:THREE.AdditiveBlending
+      })
+    );
+    scene.add(dust);
+
+    // Camera/story path
+    const pts = [
+      new THREE.Vector3(  0,  8,   70),
+      new THREE.Vector3( 24, 12,   20),
+      new THREE.Vector3( -6, 16,  -25),
+      new THREE.Vector3(-34, 14,  -70),
+      new THREE.Vector3(-10, 12, -110),
+      new THREE.Vector3( 36, 10, -150),
+      new THREE.Vector3( 14, 12, -190),
+      new THREE.Vector3(-28, 11, -235),
+      new THREE.Vector3(-12, 14, -285),
+      new THREE.Vector3( 22, 12, -330)
+    ];
+    const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.18);
+    const T_END = 0.89;
+
+    // Glowing route/ribbon
+    const ribbonPts = [];
+    for(let i=0;i<=220;i++) ribbonPts.push(curve.getPointAt((i/220)*T_END));
+    const ribbon = new THREE.Mesh(
+      new THREE.TubeGeometry(new THREE.CatmullRomCurve3(ribbonPts), 260, .28, 8, false),
+      new THREE.MeshBasicMaterial({ color:0x6f98ff, transparent:true, opacity:.22 })
+    );
+    scene.add(ribbon);
+
+    // Story planets
+    const PLANET_TS = [0.05,0.17,0.29,0.41,0.53,0.65,0.77,0.89];
+    const planets = [];
+    const halos = [];
+    const rings = [];
+
+    PLANET_TS.forEach((t,i)=>{
+      const pos = curve.getPointAt(t);
+      const hue = 200 + i*18;
+      const scale = 1 + Math.sin(i*1.25)*.18;
+
+      const planet = new THREE.Mesh(
+        new THREE.SphereGeometry(2.75, 56, 36),
+        new THREE.MeshStandardMaterial({
+          map: makePlanetTexture(512,hue),
+          roughness:.72,
+          metalness:.02
+        })
+      );
+      planet.position.copy(pos);
+      planet.scale.setScalar(scale);
+      planet.userData.spin = .002 + Math.random()*.002;
+      scene.add(planet);
+      planets.push(planet);
+
+      const halo = new THREE.Sprite(
+        new THREE.SpriteMaterial({
+          map:makeRoundSprite(512,'120,170,255',.18,0),
+          color:0x8db3ff,
+          transparent:true,
+          opacity:.9,
+          depthWrite:false,
+          blending:THREE.AdditiveBlending
+        })
+      );
+      halo.position.copy(pos);
+      halo.scale.setScalar(24*scale);
+      scene.add(halo);
+      halos.push({ halo, base:24*scale });
+
+      if(i % 2 === 1){
+        const ring = new THREE.Mesh(
+          new THREE.RingGeometry(3.6*scale, 5.1*scale, 88),
+          new THREE.MeshBasicMaterial({
+            color:0x9bbaff,
+            transparent:true,
+            opacity:.25,
+            side:THREE.DoubleSide
+          })
+        );
+        ring.position.copy(pos);
+        ring.rotation.x = Math.PI/2.15;
+        ring.rotation.z = i*.4;
+        scene.add(ring);
+        rings.push(ring);
+      }
+    });
+
+    // Subtle spacecraft guide
+    
+
+    const PANELS = [
+      { id:'p-start', t:0.00 },
+      { id:'p-about', t:0.05 },
+      { id:'p-undergrad', t:0.17 },
+      { id:'p-robotic', t:0.29 },
+      { id:'p-quantum', t:0.41 },
+      { id:'p-mini', t:0.53 },
+      { id:'p-ms', t:0.65 },
+      { id:'p-phd', t:0.77 },
+      { id:'p-future', t:0.89 }
+    ];
+    const panelEls = Object.fromEntries(PANELS.map(p => [p.id, document.getElementById(p.id)]));
+
+    function setPanelVisibility(t){
+      let nearest = PANELS[0];
+      let best = Infinity;
+      for(const p of PANELS){
+        const d = Math.abs(t-p.t);
+        if(d < best){
+          best = d;
+          nearest = p;
+        }
+      }
+      for(const p of PANELS){
+        panelEls[p.id]?.classList.toggle('show', p.id === nearest.id);
+      }
+    }
+
+    function onResize(){
+      const rect = canvas.getBoundingClientRect();
+      const w = rect.width || canvas.parentElement.clientWidth || 800;
+      const h = rect.height || canvas.parentElement.clientHeight || 500;
+      renderer.setSize(w,h,false);
+      camera.aspect = w/h;
+      camera.updateProjectionMatrix();
+    }
+    window.addEventListener('resize', onResize);
+    onResize();
+
+    function scrollProgress(){
+      const sc = window.scrollY || window.pageYOffset;
+      const top = sec.offsetTop;
+      const span = sec.offsetHeight - window.innerHeight;
+      if(span <= 0) return 0;
+      return Math.max(0, Math.min(1, (sc-top)/span)) * T_END;
+    }
+
+    function getCameraFrame(t){
+      const p = curve.getPointAt(t);
+      const ahead = curve.getPointAt(Math.min(T_END, t+.025));
+      const dir = ahead.clone().sub(p).normalize();
+      const eye = p.clone().add(new THREE.Vector3(0, 3.2, 0));
+      const target = p.clone().add(dir.multiplyScalar(10)).add(new THREE.Vector3(0, 2.7, 0));
+      return { position:eye, target };
+    }
+
+    function scrollToT(t){
+      const top = sec.offsetTop;
+      const span = sec.offsetHeight - window.innerHeight;
+      const clamped = Math.max(0, Math.min(T_END, t));
+      window.scrollTo({ top: top + (clamped/T_END)*span, behavior:'smooth' });
+    }
+
+    document.querySelectorAll('.jump').forEach(btn=>{
+      btn.addEventListener('click', ()=>scrollToT(parseFloat(btn.dataset.target || '0')));
+    });
+
+    let tCurrent = 0;
+    let time = 0;
+
+    function animate(){
+  requestAnimationFrame(animate);
+  time += .016;
+
+  const tTarget = document.body.classList.contains('interactive-mode') ? scrollProgress() : 0;
+
+  const progressFill = document.getElementById('journeyProgressFill');
+  if (progressFill) {
+    progressFill.style.width = `${(tTarget / T_END) * 100}%`;
+  }
+
+  tCurrent += (tTarget - tCurrent)*.08;
+
+  const frame = getCameraFrame(tCurrent);
+  camera.position.copy(frame.position);
+  camera.lookAt(frame.target);
+
+  stars.rotation.y += .00025;
+  dust.rotation.y += .00016;
+  starMat.uniforms.uTime.value = time;
+
+  planets.forEach(p=>p.rotation.y += p.userData.spin);
+  halos.forEach(h=>h.halo.scale.setScalar(h.base + Math.sin(time*1.2)*.7));
+  rings.forEach(r=>r.rotation.z += .0012);
+
+  const forward = frame.target.clone().sub(frame.position).normalize();
+  const side = new THREE.Vector3().crossVectors(forward, camera.up).normalize();
+
+  setPanelVisibility(tCurrent);
+  renderer.render(scene,camera);
+}
+
+    animate();
+  })();
+  </script>
 </body>
 </html>
-
