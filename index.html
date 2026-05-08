@@ -34,6 +34,13 @@
     font:16px/1.55 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   }
   body { overflow-x:hidden; }
+  body.interactive-mode {
+    background: #000;
+  }
+  body.interactive-mode .wrap {
+    max-width: none;
+    padding: 0;
+  }
   a { color:var(--accent); text-decoration:none; }
   a:hover { text-decoration:underline; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
@@ -230,14 +237,19 @@ font-size: 1.6rem;
 
   /* Interactive journey */
   .journey-intro {
+    width: min(92vw, 760px);
     text-align:center;
-    margin: 20px 0 18px;
+    margin: 0;
     scroll-margin-top: 24px;
+	background: transparent;
+    pointer-events:auto;
   }
   .journey-intro p {
     color: var(--mut);
     margin:.35rem auto 0;
     max-width:760px;
+	background: transparent;
+	
   }
 
 #scroll3d {
@@ -246,6 +258,7 @@ font-size: 1.6rem;
   z-index: 0;
   width: 100vw;
   margin-left: calc(50% - 50vw);
+  background: #000;
 }
 .pin {
   position: sticky;
@@ -257,6 +270,7 @@ font-size: 1.6rem;
   border-radius: 0;
   border: none;
   overflow: hidden;
+  background: #000;
 }
   #webgl {
     width:100%;
@@ -283,10 +297,19 @@ font-size: 1.6rem;
     z-index:2;
     pointer-events:none;
   }
-  .hud {
+  .top-stack {
     pointer-events:auto;
     align-self:center;
-    margin-top:12px;
+    width:min(96vw, 1100px);
+    display:grid;
+    grid-template-columns:auto minmax(0, 1fr);
+    align-items:start;
+    gap:12px;
+    margin-top:14px;
+  }
+  .hud {
+    pointer-events:auto;
+    margin-top:0;
     border:1px solid var(--line);
     background:var(--card);
     border-radius:12px;
@@ -294,11 +317,29 @@ font-size: 1.6rem;
     box-shadow:var(--shadow);
     backdrop-filter: blur(8px);
     font-size:.95rem;
+    display:grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    gap:.6rem .75rem;
+    align-items:center;
+    min-width:0;
+  }
+  .chapter-list {
     display:flex;
     gap:.6rem;
     flex-wrap:wrap;
-    align-items:center;
-    max-width: calc(100% - 24px);
+    min-width:0;
+  }
+  .hud-actions {
+    display:flex;
+    gap:.6rem;
+    flex-wrap:wrap;
+    justify-content:flex-end;
+    pointer-events:auto;
+  }
+  .hud-actions .cta {
+    padding:.42rem .75rem;
+    box-shadow:none;
+    white-space:nowrap;
   }
   .jump {
     cursor:pointer;
@@ -465,11 +506,21 @@ font-size: 1.6rem;
     .hud {
       max-height: 126px;
       overflow:auto;
+      grid-template-columns: 1fr;
+      justify-items:center;
+    }
+    .top-stack {
+      grid-template-columns: 1fr;
+      justify-items:center;
+    }
+    .chapter-list,
+    .hud-actions {
       justify-content:center;
+      margin-left:0;
     }
     .pin {
-      height: 74vh;
-      min-height: 520px;
+      height: 100vh;
+      min-height: 100vh;
     }
   }
 </style>
@@ -579,35 +630,40 @@ font-size: 1.6rem;
       </div>
     </section>
 
-    <div id="journey" class="journey-intro">
-      <h2>Interactive Journey</h2>
-      <p>Scroll through the longer story behind my path into quantum computing and quantum chemistry.</p>
-      <div class="mode-bar" style="margin-top:16px">
-        <button class="cta back-choice" type="button"><i class="fa-solid fa-arrow-left"></i> Back to choices</button>
-        <button class="cta mode-select" data-mode="simple" type="button"><i class="fa-solid fa-bolt"></i> Switch to Quick Profile</button>
-      </div>
-    </div>
+    
 
     <section id="scroll3d" aria-label="Scroll-driven 3D">
-      <div class="pin">
+      
+	  <div class="pin">
         <canvas id="webgl"></canvas>
+		
+		
+		
 		<div class="journey-progress">
 			<div id="journeyProgressFill"></div>
 		</div>
         <div class="vignette"></div>
 
         <div class="overlay">
-          <div class="hud">
-            <span class="sp">Chapters:</span>
-            <button class="jump" data-target="0.00">Start</button>
-            <button class="jump" data-target="0.05">About Me</button>
-            <button class="jump" data-target="0.17">Undergrad</button>
-            <button class="jump" data-target="0.29">Robotic Surgery</button>
-            <button class="jump" data-target="0.41">Quantum Entry</button>
-            <button class="jump" data-target="0.53">Research Intern</button>
-            <button class="jump" data-target="0.65">Masters</button>
-            <button class="jump" data-target="0.77">PhD</button>
-            <button class="jump" data-target="0.89">Resume</button>
+          <div class="top-stack">
+            <div class="hud-actions">
+              <button class="cta back-choice" type="button"><i class="fa-solid fa-arrow-left"></i> Back to choices</button>
+              <button class="cta mode-select" data-mode="simple" type="button"><i class="fa-solid fa-bolt"></i> Switch to Quick Profile</button>
+            </div>
+            <div class="hud">
+              <span class="sp">Chapters:</span>
+              <span class="chapter-list">
+                <button class="jump" data-target="0.00">Start</button>
+                <button class="jump" data-target="0.05">About Me</button>
+                <button class="jump" data-target="0.17">Undergrad</button>
+                <button class="jump" data-target="0.29">Robotic Surgery</button>
+                <button class="jump" data-target="0.41">Quantum Entry</button>
+                <button class="jump" data-target="0.53">Research Intern</button>
+                <button class="jump" data-target="0.65">Masters</button>
+                <button class="jump" data-target="0.77">PhD</button>
+                <button class="jump" data-target="0.89">Resume</button>
+              </span>
+            </div>
           </div>
 
           <div class="panels">
@@ -732,8 +788,8 @@ After the DRR generation the registration algorithm registers CARM and DRR to fi
     function setMode(mode){
       document.body.classList.remove('choice-mode', 'simple-mode', 'interactive-mode');
       document.body.classList.add(mode + '-mode');
-      const target = mode === 'simple' ? document.getElementById('quick-profile') : document.getElementById('journey');
-      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const target = mode === 'simple' ? document.getElementById('quick-profile') : document.getElementById('scroll3d');
+      if (target) target.scrollIntoView({ behavior: 'auto', block: 'start' });
       setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
     }
 
