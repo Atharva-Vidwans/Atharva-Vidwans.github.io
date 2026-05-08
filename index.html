@@ -223,7 +223,7 @@ font-size: 1.6rem;
     padding:.28rem .65rem;
     font-size:.9rem;
   }
-  .mini-grid { display:grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top:16px; }
+  .mini-grid { display:grid; grid-template-columns: repeat(2, 1fr); gap: 16px; margin-top:16px; }
   .mini-card { min-height: 135px; }
   .link-list { display:grid; gap:.45rem; margin-top:.5rem; }
   .link-list a { display:inline-flex; gap:.45rem; align-items:center; }
@@ -488,7 +488,7 @@ font-size: 1.6rem;
             <div class="card-role">PhD Student · Quantum information science · UW–Madison</div>
             <p>Quantum algorithm development and resource estimation</p>
             <div class="contact-strip">
-			<a href="mailto:avidwans@wisc.edu"><i class="fa-solid fa-envelope"></i></a>
+			<a href="mailto:atharvavidwans@wisc.edu"><i class="fa-solid fa-envelope"></i></a>
 			<a href="https://github.com/Atharva-Vidwans" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i></a>
 			<a href="https://www.linkedin.com/in/atharva-vidwans-62739b169" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin"></i></a>
 			<a href="https://atharvavidwans.medium.com/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-medium"></i></a>
@@ -500,6 +500,7 @@ font-size: 1.6rem;
               <a class="cta" href="Files/Resume.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-lines"></i> Resume</a>
             </div>
             <div class="choice-note">Choose the fast professional profile or the cinematic scroll-through version.</div>
+			
           </div>
           
         </div>
@@ -518,43 +519,63 @@ font-size: 1.6rem;
 
       <div class="profile-grid">
         <article class="card">
-          <h3>Research Focus</h3>
-          <p>I work on quantum algorithms and quantum chemistry, with a focus on reducing quantum resources for molecular electronic structure calculations.</p>
-          <p>Current interests include double factorization, tensor hypercontraction, BIQAE, DB-QITE-style state preparation, compiler-aware circuit depth reduction, and fault-tolerant resource estimation.</p>
+          <h3>About Me</h3>
+          <p>I am originally from Pune, India. I completed my undergraduate degree in Mechanical Engineering before transitioning into Physics and Quantum Computing through self-study, research internships, and competitive projects. Before beginning my PhD, I worked on autonomous robotic surgery systems focused on kidney stone treatment and later conducted research in quantum optimization and variational quantum algorithms.</p>
+          <p>My current research interests lie in reducing the resource requirements of quantum algorithms for molecular electronic structure simulations by combining techniques from quantum algorithms, quantum chemistry, fault-tolerant resource estimation, quantum circuit optimization, and scalable approaches for quantum chemistry simulations. Broadly, I am interested in hybrid quantum classical methods, quantum algorithm design, and practical pathways toward useful fault-tolerant quantum computing.</p>
           <div class="tag-row">
-            <span class="tag">Quantum Chemistry</span>
-            <span class="tag">BIQAE</span>
-            <span class="tag">ADAPT-VQE</span>
-            <span class="tag">DF / THC</span>
-            <span class="tag">Resource Estimation</span>
+            <span class="tag">Quantum computing</span>
+            <span class="tag">FTQC</span>
+			<span class="tag">Quantum chemistry</span>
+			<span class="tag">NISQ</span>
+            <span class="tag">Resource estimation</span>
+			<span class="tag">Quantum simulaton</span>
           </div>
         </article>
         <aside class="card">
           <h3>At a Glance</h3>
           <p><strong>Role:</strong> PhD student, UW–Madison</p>
-          <p><strong>Advisor:</strong> Prof. Matthew Otten</p>
-          <p><strong>Background:</strong> Mechanical Engineering → Physics → Quantum Chemistry</p>
+          <p><strong>PhD Advisor:</strong> Prof. Matthew Otten</p>
+          <p><strong>Background:</strong> Mechanical Engineering(Undergrad) → Quantum Physics(Masters) → Quantum Chemistry(PhD)</p>
           <p><strong>Location:</strong> Madison, Wisconsin</p>
 
         </aside>
       </div>
 
       <div class="mini-grid">
-        <article class="card mini-card">
-          <h3>BIQAE</h3>
-          <p>Bayesian Iterative Quantum Amplitude Estimation for efficient amplitude and molecular energy estimation with rigorous intervals.</p>
-          <a href="https://arxiv.org/abs/2507.23074" target="_blank" rel="noopener noreferrer">Paper</a>
+        
+        <article class="card">
+          <h3>Presentations & Conferences</h3>
+
+		<p>
+		<strong>Chicago Quantum Summit 2024</strong> <br>
+		Presented <em>qDRIVE: Quantum Deflated Resonance Identification Variational Eigensolver for Molecular Resonances</em>
+		(Chicago, USA)
+		</p>
+
+		<p>
+		<strong>GSFLC 2023</strong> <br>
+		Presented research on <em>qDRIVE for Molecular Resonances on Near-Term Quantum Computers</em>
+		(USA)
+		</p>
+
+		<p>
+		<strong>13th Warsaw IT Days Conference 2022</strong> <br> 
+		Presented <em>Solving the Vehicle Routing Problem using VQE</em>
+		(Poland)
+		</p>
+		  
         </article>
-        <article class="card mini-card">
-          <h3>qDRIVE</h3>
-          <p>Variational quantum algorithm for resonance states using complex absorbing potentials and pseudovariance.</p>
-          <a href="https://arxiv.org/abs/2511.15981" target="_blank" rel="noopener noreferrer">Paper</a>
-        </article>
-        <article class="card mini-card">
-          <h3>Selected Projects</h3>
-          <p>Vehicle routing with VQE/FVQE, robotic-surgery image registration, surface-code simulations, and quantum ML mini projects.</p>
-          <a href="#tiles">Explore projects</a>
-        </article>
+        <article class="card">
+		<h3>Academic Service</h3>
+
+		<p><strong>Reviewer</strong> <br> Quantum Machine Intelligence (Springer)</p>
+
+		<p>
+			<strong>Teaching Assistant</strong> <br>
+			General Chemistry (CHEM 104, CHEM 109)<br>
+			Physical Chemistry II (CHEM 562)
+		</p>
+		</article>
       </div>
     </section>
 
@@ -636,58 +657,63 @@ in quantum computing.</p></div>
 
     <section id="tiles" style="margin:60px 0">
       <h2 style="text-align:center; margin-bottom:24px;">Selected Projects</h2>
-      <div class="tile-grid">
+      
+<div class="tile-grid">
         <div class="tile"
           data-title="BIQAE"
-          data-html="Bayesian Iterative Quantum Amplitude Estimation uses Bayesian inference to obtain rigorous interval estimates with fewer measurements. Paper: <a href='https://arxiv.org/abs/2507.23074' target='_blank' rel='noopener noreferrer'>arXiv</a>.<br><br>Mentors: Prof. Yazhen Wang and Prof. Micheline Soley">
+          data-html="We establish a unified statistical framework that underscores the crucial role statistical inference plays in Quantum Amplitude Estimation (QAE), a task essential to fields ranging from chemistry to finance and machine learning. We use this framework to harness Bayesian statistics for improved measurement efficiency with rigorous interval estimates at all iterations of Iterative Quantum Amplitude Estimation. We demonstrate the resulting method, Bayesian Iterative Quantum Amplitude Estimation (BIQAE), accurately and efficiently estimates both quantum amplitudes and molecular ground-state energies to high accuracy, and show in analytic and numerical sample complexity analyses that BIQAE outperforms all other QAE approaches considered. Both rigorous mathematical proofs and numerical simulations conclusively indicate Bayesian statistics is the source of this advantage, a finding that invites further inquiry into the power of statistics to expedite the search for quantum utility. Paper can be found <a href='https://arxiv.org/abs/2507.23074' target='_blank' rel='noopener noreferrer'>here</a>.
+		  <br>Mentor: Prof. Yazhen Wang and Prof. Micheline Soley">
           <div class="tile-inner">
-            <div class="tile-front"><h3>BIQAE</h3></div>
-            <div class="tile-back">Bayesian Iterative Quantum Amplitude Estimation</div>
+            <div class="tile-front">
+              <h3>BIQAE</h3>
+            </div>
+            <div class="tile-back">
+              Bayesian Iterative Quantum Amplitude Estimation
+            </div>
           </div>
         </div>
 
-        <div class="tile"
-          data-title="qDRIVE"
-          data-html="qDRIVE is a variational quantum algorithm for resonance states using complex absorbing potentials and pseudovariance. Paper: <a href='https://arxiv.org/abs/2511.15981' target='_blank' rel='noopener noreferrer'>arXiv</a>.<br><br>Mentor: Prof. Micheline Soley">
+        <div class="tile" data-title="qDRIVE" data-html="Many interesting problems in chemistry, from controlling the outcome of ultracold chemical
+reactions collisions to autoionizing electronic states, rely on the efficient computation of resonances,
+the complex-energy eigenstates of the Hamiltonian. Classical computing algorithms suffer from
+the curse of dimensionality, while current quantum algorithms require prior information, such as
+theta trajectories in complex scaling methods. We design a variational method using complex
+absorbing potentials that can be run with a low qubit and gate count on quantum computers. We
+introduce a novel metric, the“pseudovariance”, to determine the eigenstates of the non-Hermitian
+Hamiltonian, and present various methods to improve the accuracy and efficiency of the algorithm
+for use on near-term intermediate-scale quantum computers. More generally, the algorithm has
+the capabilities to calculate the eigenvalues of non-Hermitian Hamiltonians, suggesting ultimate
+impacts in parity-time reversal (PT) symmetry, optics, and nuclear physics. Paper can be found here <a href='https://arxiv.org/abs/2511.15981' target='_blank' rel='noopener noreferrer'>here</a>
+<br>Mentor: Prof. Micheline Soley">
           <div class="tile-inner">
             <div class="tile-front"><h3>qDRIVE</h3></div>
-            <div class="tile-back">Quantum Deflated Resonance Identification VQE</div>
+            <div class="tile-back">quantum Deflated Resonance Identification Variational Quantum Eigensolver</div>
           </div>
-        </div>
+		</div>  
 
-        <div class="tile"
-          data-title="VRP"
-          data-html="Research internship with Dr. Paweł Gora at the University of Warsaw applying VQE/FVQE methods to the Vehicle Routing Problem. Slides: <a href='https://www.informatyka.agh.edu.pl/media/uploads/kqis-55-pawel-gora-26-04-2022-slides.pdf' target='_blank' rel='noopener noreferrer'>conference slides</a>.">
+        <div class="tile" data-title="VRP" data-html="I worked under Dr. Paweł Gora at the University of Warsaw as a research intern, focusing on applying Variational Quantum Eigensolver (VQE) methods to combinatorial optimization problems. My main project was on the Vehicle Routing Problem (VRP) and its variants, where I explored hybrid approaches such as Layered-VQE and Filtering-VQE. This work gave me early experience in bridging quantum algorithms with real-world optimization challenges.
+		The slides from that conference can be viewed <a href='https://www.informatyka.agh.edu.pl/media/uploads/kqis-55-pawel-gora-26-04-2022-slides.pdf' target='_blank' rel='noopener noreferrer'>here</a>. 
+		<br>Mentor: Prof. Pawel Gora">
           <div class="tile-inner">
             <div class="tile-front"><h3>VRP</h3></div>
             <div class="tile-back">Vehicle Routing Problem on a Quantum Computer</div>
           </div>
         </div>
 
-        <div class="tile"
-          data-title="Robotic Surgery"
-          data-html="Algorithmic work on estimating shifts in calyx position and orientation during kidney-stone removal surgery using DRR generation and image registration.">
+        <div class="tile" data-title="Robotic Surgery" data-html="My aim was to develop an algorithm to calculate the shift in the position and orientation of the calyx between the pre-operative CT acquisition and the intra-operative patient orientation during the kidney stone removal surgery so that it can be taken into consideration by the robot arm during puncture process.
+For this I developed an algorithm, which generates the Digitally Rendered Radiograph of the input CT volume data at given angle of rotation of CT data.
+After the DRR generation the registration algorithm registers CARM and DRR to find the best possible pair with least error or maximum similarity so that the exact orientation of the calyx can be found out. A detailed report of this work can be found <a href='Files/comofi_report.pdf' target='_blank' rel='noopener noreferrer'>here</a>
+<br>Mentor: Rakesh Sharma">
           <div class="tile-inner">
             <div class="tile-front"><h3>Robotic Surgery</h3></div>
-            <div class="tile-back">Autonomous Robotic Surgery for Kidney Stones</div>
+            <div class="tile-back">Autonomous Robotic Surgery for treating Kidney stones</div>
           </div>
         </div>
       </div>
-    </section>
-
-    <section id="contact" style="margin-top:24px;margin-bottom:60px">
-      <h2>Contact</h2>
-      <p style="color:#bcd0ff">EMAIL:
-        <a href="mailto:atharvavidwans@gmail.com">atharvavidwans@gmail.com</a> |
-        <a href="mailto:avidwans@wisc.edu">avidwans@wisc.edu</a>
-      </p>
-      <div class="social-icons" aria-label="Social links">
-        <span style="color:#bcd0ff">SOCIAL:</span>
-        <a href="https://www.linkedin.com/in/atharva-vidwans-62739b169" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><i class="fa-brands fa-linkedin-in"></i></a>
-        <a href="https://github.com/Atharva-Vidwans" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><i class="fa-brands fa-github"></i></a>
-        <a href="https://medium.com/@atharvavidwans" target="_blank" rel="noopener noreferrer" aria-label="Medium"><i class="fa-brands fa-medium"></i></a>
       </div>
     </section>
+
+
   </div>
 
   <div class="modal" id="modal">
