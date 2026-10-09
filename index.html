@@ -409,6 +409,8 @@ font-size: 1.6rem;
     justify-content: center;
     gap: 24px;
     flex-wrap: wrap;
+    max-width: 600px;
+    margin: 0 auto;
   }
   .tile { width: 180px; height: 180px; perspective: 1000px; }
   .tile-inner {
@@ -494,11 +496,61 @@ font-size: 1.6rem;
     color: var(--mut);
   }
 
+  /* Light theme: landing card and Quick Profile (Interactive Journey stays dark) */
+  html:has(body.choice-mode), html:has(body.simple-mode) { background:#e9ebef; }
+  body.choice-mode, body.simple-mode {
+    --ink:#14181f;
+    --mut:#5a6272;
+    --card:#ffffff;
+    --line:#dde1e8;
+    --accent:#2f5fb3;
+    --shadow:0 1px 2px rgba(20,24,31,.06), 0 12px 32px rgba(20,24,31,.08);
+    background:#e9ebef;
+    color:var(--ink);
+    min-height:100vh;
+  }
+  body.choice-mode .hero-card {
+    max-width:100%;
+    background:#ffffff;
+    border:1px solid #dde1e8;
+    border-radius:18px;
+    box-shadow:0 1px 2px rgba(20,24,31,.06), 0 18px 48px rgba(20,24,31,.12);
+    backdrop-filter:none;
+  }
+  body.choice-mode .hero-card::before { border-color:#eef0f4; border-radius:12px; }
+  body.choice-mode .card-role { color:#3b4252; }
+  body.choice-mode .contact-strip a { color:var(--accent); }
+  body.choice-mode .contact-strip a:hover { color:#1d3f7d; text-decoration:none; }
+  body.choice-mode .choice-note { color:#7a8191; }
+  :is(body.choice-mode, body.simple-mode) .cta {
+    color:var(--ink);
+    background:#ffffff;
+    box-shadow:0 1px 2px rgba(20,24,31,.06);
+  }
+  :is(body.choice-mode, body.simple-mode) .cta:hover { border-color:var(--accent); }
+  :is(body.choice-mode, body.simple-mode) .cta.primary {
+    color:#ffffff;
+    background:var(--accent);
+    border-color:var(--accent);
+  }
+  :is(body.choice-mode, body.simple-mode) .cta.primary:hover { background:#244c93; }
+  body.simple-mode .card { background:#ffffff; backdrop-filter:none; }
+  body.simple-mode .card p { color:#3b4252; }
+  body.simple-mode .tag { background:#f1f3f7; color:#3b4252; }
+  body.simple-mode .social-icons a { background:#ffffff; color:var(--ink); }
+  body.simple-mode .tile-front { background:#ffffff; }
+  body.simple-mode .tile-back { background:var(--accent); }
+  body.simple-mode .modal { background:rgba(20,24,31,.55); }
+  body.simple-mode .modal-content { background:#ffffff; color:var(--ink); }
+
   @media (max-width: 820px){
     .profile-grid,
     .mini-grid,
     .visiting-card-grid { grid-template-columns: 1fr; }
     .hero { text-align:center; }
+    .hero-card { width:100%; }
+    .hero h1 { white-space:normal; }
+    .contact-strip { justify-content:center; flex-wrap:wrap; }
     .hero p { margin:0 auto; }
     .hero-actions { justify-content:center; }
     
@@ -537,7 +589,7 @@ font-size: 1.6rem;
             
             <h1>Atharva Vidwans</h1>
             <div class="card-role">PhD Student · Quantum information science · UW–Madison</div>
-            <p>Quantum algorithm development and resource estimation</p>
+            <p>Making quantum algorithms practical</p>
             <div class="contact-strip">
 			<a href="mailto:atharvavidwans@wisc.edu"><i class="fa-solid fa-envelope"></i></a>
 			<a href="https://github.com/Atharva-Vidwans" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github"></i></a>
@@ -572,14 +624,15 @@ font-size: 1.6rem;
         <article class="card">
           <h3>About Me</h3>
           <p>I am originally from Pune, India. I completed my undergraduate degree in Mechanical Engineering before transitioning into Physics and Quantum Computing through self-study, research internships, and competitive projects. Before beginning my PhD, I worked on autonomous robotic surgery systems focused on kidney stone treatment and later conducted research in quantum optimization and variational quantum algorithms.</p>
-          <p>My current research interests lie in reducing the resource requirements of quantum algorithms for molecular electronic structure simulations by combining techniques from quantum algorithms, quantum chemistry, fault-tolerant resource estimation, quantum circuit optimization, and scalable approaches for quantum chemistry simulations. Broadly, I am interested in hybrid quantum classical methods, quantum algorithm design, and practical pathways toward useful fault-tolerant quantum computing.</p>
+          <p>My research is about making quantum algorithms practical by reducing the shots, queries, and circuit resources they need. At UW–Madison I work on Bayesian measurement schemes for imaginary-time evolution and on fault-tolerant resource estimation. In summer 2026 I developed adaptive shot allocation for gate set tomography at Argonne National Laboratory. Broadly, I am interested in quantum algorithm design, Hamiltonian simulation, and practical pathways toward useful fault-tolerant quantum computing.</p>
           <div class="tag-row">
-            <span class="tag">Quantum computing</span>
+            <span class="tag">Quantum algorithms</span>
             <span class="tag">FTQC</span>
-			<span class="tag">Quantum chemistry</span>
-			<span class="tag">NISQ</span>
             <span class="tag">Resource estimation</span>
-			<span class="tag">Quantum simulaton</span>
+            <span class="tag">Hamiltonian simulation</span>
+            <span class="tag">Gate set tomography</span>
+            <span class="tag">Bayesian methods</span>
+            <span class="tag">Quantum chemistry</span>
           </div>
         </article>
         <aside class="card">
@@ -587,10 +640,20 @@ font-size: 1.6rem;
           <p><strong>Role:</strong> PhD student, UW–Madison</p>
           <p><strong>PhD Advisor:</strong> Prof. Matthew Otten</p>
           <p><strong>Background:</strong> Mechanical Engineering(Undergrad) → Quantum Physics(Masters) → Quantum Chemistry(PhD)</p>
+          <p><strong>Summer 2026:</strong> Givens Associate, Argonne National Laboratory</p>
           <p><strong>Location:</strong> Madison, Wisconsin</p>
-
+          <p><strong>Looking for:</strong> Quantum computing research internship, Summer 2027</p>
         </aside>
       </div>
+
+      <article class="card" style="margin-top:16px">
+        <h3>Publications</h3>
+        <p>Q. Li*, <strong>A. Vidwans</strong>*, Y. Wang, M. B. Soley. “Harnessing Bayesian Statistics to Accelerate Iterative Quantum Amplitude Estimation.” <em>Quantum</em> 10, 1962 (2026). <a href="https://arxiv.org/abs/2507.23074" target="_blank" rel="noopener noreferrer">arXiv</a></p>
+        <p>J. Dai*, <strong>A. Vidwans</strong>*, E. H. Wan, A. X. Miller, M. B. Soley. “Molecular resonance identification in complex absorbing potentials via integrated quantum computing and high-throughput computing.” arXiv:2511.15981 (2025). <a href="https://arxiv.org/abs/2511.15981" target="_blank" rel="noopener noreferrer">arXiv</a></p>
+        <p><strong>A. Vidwans</strong> et al. “Not every circuit deserves a shot: adaptive shot experiment design for gate set tomography.” Manuscript in preparation.</p>
+        <p><strong>A. S. Vidwans</strong>. “Cognitive computing in autonomous vehicles.” In <em>Cognitive Computing for Human-Robot Interaction</em>, pp. 121–146. Academic Press (2021).</p>
+        <p style="color:var(--mut); font-size:.9rem">* equal contribution</p>
+      </article>
 
       <div class="mini-grid">
         
@@ -598,9 +661,21 @@ font-size: 1.6rem;
           <h3>Presentations & Conferences</h3>
 
 		<p>
+		<strong>Argonne National Laboratory 2026</strong> <br>
+		Presented <em>Efficient gate set tomography with POUNDERS</em>
+		(Lemont, USA)
+		</p>
+
+		<p>
 		<strong>Chicago Quantum Summit 2024</strong> <br>
 		Presented <em>qDRIVE: Quantum Deflated Resonance Identification Variational Eigensolver for Molecular Resonances</em>
 		(Chicago, USA)
+		</p>
+
+		<p>
+		<strong>Wisconsin Quantum Institute Colloquium 2024</strong> <br>
+		Presented <em>qDRIVE: A Variational Quantum Eigensolver for Resonance Identification on Near-Term Computers</em>
+		(Madison, USA)
 		</p>
 
 		<p>
@@ -668,9 +743,9 @@ font-size: 1.6rem;
 
           <div class="panels">
             <div id="p-start"     class="panel"><h3 class="accent">Start</h3><p>Welcome aboard!! My name is Atharva Vidwans and I will take you through my life journey. Enjoy the ride!!!</p></div>
-            <div id="p-about"     class="panel"><h3 class="accent">About Me</h3><p>I am a second year PhD student at UW Madison. My research is in Quantum algorithms and quantum computing. Outside my research and academics, I like solving problems and putting pieces together, sometimes elegantly, sometimes with duct tape. I build, break, and rebuild until something interesting comes out. Outside of that cycle, I write blogs, play soccer and badminton, or buried in an Agatha Christie novel (my personal favourite novel: Murder of Roger Ackroyd).</p></div>
+            <div id="p-about"     class="panel"><h3 class="accent">About Me</h3><p>I am a third year PhD student at UW Madison. My research is in quantum algorithms, and in making them practical to run. Outside my research and academics, I like solving problems and putting pieces together, sometimes elegantly, sometimes with duct tape. I build, break, and rebuild until something interesting comes out. Outside of that cycle, I write blogs, play soccer and badminton, or buried in an Agatha Christie novel (my personal favourite novel: Murder of Roger Ackroyd).</p></div>
             <div id="p-undergrad" class="panel"><h3 class="accent">Undergrad</h3><p>I completed my undergraduate degree in Mechanical Engineering, with a final year project focused on <strong>3D printing</strong>. Studying Mechanical Engineering gave me a unique perspective on problem solving, it was during these 4 years I became fascinated by the strange and elegant laws that govern the quantum world. This was my first introduction to quantum.</p></div>
-            <div id="p-robotic"   class="panel"><h3 class="accent">Autonomous Robotic Surgery</h3><p>After my undergraduate degree, I worked as a Research Intern at a startup in <strong>autonomous robotic surgery for treating kidney stones</strong> under the guidance of <strong>Rakesh Sharma</strong>. My work focused on image registration of Digitally Rendered Radiographs(DRRs), where I used Python tools of parallel processing such as Numba to accelerate DRR generation. By leveraging parallel computing, I was able to improve registration speed by nearly 300×. A detailed report of this work can be found (<a href="Files/comofi_report.pdf" target="_blank" rel="noopener noreferrer">here</a>).</p><p>Even while working in robotics, my self-study in quantum mechanics and quantum computing never stopped.</p></div>
+            <div id="p-robotic"   class="panel"><h3 class="accent">Autonomous Robotic Surgery</h3><p>After my undergraduate degree, I worked as a Research Intern at a startup in <strong>autonomous robotic surgery for treating kidney stones</strong> under the guidance of <strong>Rakesh Sharma</strong>. My work focused on registering pre-operative CT scans with live X-ray images using Digitally Reconstructed Radiographs (DRRs). Existing tools did not work on our data, so I wrote my own ray-casting DRR algorithm in Python and parallelized it with Numba and PyCUDA, bringing DRR generation time down from 70 minutes to 8 seconds.</p><p>Even while working in robotics, my self-study in quantum mechanics and quantum computing never stopped.</p></div>
             <div id="p-quantum"   class="panel">
               <h3 class="accent">Entry into Quantum Computing</h3>
               <p>After enough studying and tinkering in Quantum Computing, I wanted to put my curiosity to the test, so I threw myself into quantum computing competitions, breaking things, fixing them, and occasionally even solving the problem. Along the way, I earned the <strong>IBM Quantum Developer (Associate)</strong> certification (<a href="https://www.credly.com/badges/22fd159d-7d25-4988-88ff-926a45c09da3" target="_blank" rel="noopener noreferrer">here</a>). With all these competitions and hackathons, I discovered that dedication isn’t just about smooth wins, it’s about the nights spent stuck on a bug, the papers re-read three times, and the stubborn joy of refusing to give up until something finally clicks.</p>
@@ -691,20 +766,20 @@ font-size: 1.6rem;
 development and error correction. I investigated molecular resonances and developed a quantum 
 algorithm called <strong>qDRIVE</strong>, which incorporated <strong>Complex Absorbing Potentials</strong> to 
 identify resonance states (<a href="https://arxiv.org/abs/2511.15981" target="_blank" rel="noopener noreferrer">paper</a>). I also contributed to the design and implementation of 
-<strong>Bayesian Iterative Quantum Amplitude Estimation (BIQAE)</strong>, where Bayesian inference was 
-used to obtain rigorous interval estimates with far fewer measurements in applications ranging 
-from finance to quantum chemistry 
-(<a href="https://arxiv.org/abs/2507.23074" target="_blank" rel="noopener noreferrer">paper</a>). 
+<strong>Bayesian Iterative Quantum Amplitude Estimation (BIQAE)</strong>, where Bayesian inference was
+used to obtain rigorous interval estimates with fewer measurements than existing methods, now published
+in <em>Quantum</em>
+(<a href="https://arxiv.org/abs/2507.23074" target="_blank" rel="noopener noreferrer">paper</a>).
 In parallel, I explored <strong>ADAPT-VQE</strong>, an adaptive ansatz construction method for ground-state 
 energy estimation, analyzing its efficiency and limitations compared to traditional unitary 
-coupled-cluster approaches. Additionally, I implemented simulations of <strong>surface codes</strong> to study 
-error thresholds, logical qubit lifetimes, and trade-offs between code distance and realistic noise 
-models 
-(<a href="Files/SurfaceCodes.pdf" target="_blank" rel="noopener noreferrer">report</a>). 
-Collectively, these projects gave me broad experience in algorithm design, performance analysis, 
-and error mitigation strategies, preparing me to tackle both theoretical and practical challenges 
+coupled-cluster approaches. Additionally, I built <strong>surface-code</strong> logical qubits in Qiskit, with X-cut and Z-cut
+qubits and logical X, Y, Z, and H gates, and compared their fidelity against physical qubits under
+gate and measurement noise
+(<a href="Files/SurfaceCodes.pdf" target="_blank" rel="noopener noreferrer">report</a>).
+Collectively, these projects gave me broad experience in algorithm design, performance analysis,
+and error correction, preparing me to tackle both theoretical and practical challenges
 in quantum computing.</p></div>
-            <div id="p-phd"       class="panel"><h3 class="accent">PhD</h3><p>Currently I am in my second year of my PhD in Quantum chemistry. I am working under the mentorship of Prof. Matthew Otten. I am working with Double factorization and tensor hyper contraction along with BIQAE to reduce number of pauli terms scaling thus requiring even less shots than exsiting methods. Working on reducing the depth and T gate count of BIQAE circuit using techniques like local Grover implementation, surrogate quantum circuits and using different quantum compilers. I am also working in estimating resources for BIQAE for FTQC using Fluid Allocation of Surface code qubit mathematical model. </p></div>
+            <div id="p-phd"       class="panel"><h3 class="accent">PhD</h3><p>I am now in the third year of my PhD in quantum chemistry, working under the mentorship of <strong>Prof. Matthew Otten</strong>. My research is about making quantum algorithms cheaper to run. I developed a <strong>Bayesian measurement scheme for imaginary-time evolution (DB-QITE / PDBQITE)</strong> that reuses the measurement outcomes the original method throws away, cutting the queries needed per energy estimate by 4.2× for LiH and 9.8× for BeH<sub>2</sub> in simulation. I also build <strong>fault-tolerant resource estimates</strong> using the Fluid Allocation of Surface code Qubits (FLASQ) model and double-factorized Trotter circuits.</p><p>In summer 2026 I was a <strong>Givens Associate at Argonne National Laboratory</strong> with Dr. Matt Menickelly and Dr. Jeffrey Larson. There I developed an <strong>adaptive shot-allocation method for gate set tomography</strong> that needs about 2.1× (one qubit) and 2.7× (two qubits) fewer shots for the same gate accuracy.</p></div>
             <div id="p-future"    class="panel"><h3 class="accent">Resume</h3><p>Click <a href="Files/Resume.pdf" target="_blank" rel="noopener noreferrer">here</a> for resume</p></div>
           </div>
         </div>
@@ -715,10 +790,18 @@ in quantum computing.</p></div>
       <h2 style="text-align:center; margin-bottom:24px;">Selected Projects</h2>
       
 <div class="tile-grid">
+        <div class="tile" data-title="Adaptive Gate Set Tomography" data-html="At Argonne National Laboratory (summer 2026) I developed an adaptive shot-allocation method for gate set tomography. Instead of measuring every circuit the same number of times, it uses Fisher-information experiment design to send shots where they teach us the most. I found that plain D-optimal allocation hurts state-preparation and measurement (SPAM) accuracy, and designed a new criterion that fixes it. The result needs about 2.1× (one qubit) and 2.7× (two qubits) fewer shots than standard maximum-likelihood GST for the same gate accuracy, with no loss in SPAM accuracy. Built with pyGSTi and POUNDERS, with large sweeps run on HTCondor. Manuscript in preparation.
+<br>Mentors: Dr. Matt Menickelly and Dr. Jeffrey Larson">
+          <div class="tile-inner">
+            <div class="tile-front"><h3>Adaptive GST</h3></div>
+            <div class="tile-back">Adaptive shot allocation for gate set tomography</div>
+          </div>
+        </div>
+
         <div class="tile"
           data-title="BIQAE"
-          data-html="We establish a unified statistical framework that underscores the crucial role statistical inference plays in Quantum Amplitude Estimation (QAE), a task essential to fields ranging from chemistry to finance and machine learning. We use this framework to harness Bayesian statistics for improved measurement efficiency with rigorous interval estimates at all iterations of Iterative Quantum Amplitude Estimation. We demonstrate the resulting method, Bayesian Iterative Quantum Amplitude Estimation (BIQAE), accurately and efficiently estimates both quantum amplitudes and molecular ground-state energies to high accuracy, and show in analytic and numerical sample complexity analyses that BIQAE outperforms all other QAE approaches considered. Both rigorous mathematical proofs and numerical simulations conclusively indicate Bayesian statistics is the source of this advantage, a finding that invites further inquiry into the power of statistics to expedite the search for quantum utility. Paper can be found <a href='https://arxiv.org/abs/2507.23074' target='_blank' rel='noopener noreferrer'>here</a>.
-		  <br>Mentor: Prof. Yazhen Wang and Prof. Micheline Soley">
+          data-html="We built a unified statistical framework for quantum amplitude estimation and used it to bring Bayesian inference into Iterative Quantum Amplitude Estimation, with rigorous interval estimates at every iteration. BIQAE needs about 14% fewer samples than IQAE across six orders of magnitude in target accuracy, and 8–13% fewer for ground-state energies of H<sub>2</sub>, LiH, BeH<sub>2</sub>, and HF. Proofs and simulations show the gain comes from the Bayesian step itself. Published in <em>Quantum</em> (2026); I am co-first author. Paper can be found <a href='https://arxiv.org/abs/2507.23074' target='_blank' rel='noopener noreferrer'>here</a>.
+		  <br>Mentors: Prof. Yazhen Wang and Prof. Micheline Soley">
           <div class="tile-inner">
             <div class="tile-front">
               <h3>BIQAE</h3>
@@ -729,17 +812,7 @@ in quantum computing.</p></div>
           </div>
         </div>
 
-        <div class="tile" data-title="qDRIVE" data-html="Many interesting problems in chemistry, from controlling the outcome of ultracold chemical
-reactions collisions to autoionizing electronic states, rely on the efficient computation of resonances,
-the complex-energy eigenstates of the Hamiltonian. Classical computing algorithms suffer from
-the curse of dimensionality, while current quantum algorithms require prior information, such as
-theta trajectories in complex scaling methods. We design a variational method using complex
-absorbing potentials that can be run with a low qubit and gate count on quantum computers. We
-introduce a novel metric, the“pseudovariance”, to determine the eigenstates of the non-Hermitian
-Hamiltonian, and present various methods to improve the accuracy and efficiency of the algorithm
-for use on near-term intermediate-scale quantum computers. More generally, the algorithm has
-the capabilities to calculate the eigenvalues of non-Hermitian Hamiltonians, suggesting ultimate
-impacts in parity-time reversal (PT) symmetry, optics, and nuclear physics. Paper can be found here <a href='https://arxiv.org/abs/2511.15981' target='_blank' rel='noopener noreferrer'>here</a>
+        <div class="tile" data-title="qDRIVE" data-html="Molecular resonances are short-lived states that matter in fields from photocatalysis to quantum control. qDRIVE finds them by combining complex absorbing potentials with deflation-based VQE, and runs the resulting network of VQE tasks asynchronously and in parallel on high-throughput computing (HTCondor) to cut wall time. It recovered the bound and resonance energies of a benchmark model to under 1% error in simulation, and we tested it under shot noise, an IBM Torino noise model, and IBM quantum hardware. I am co-first author. Paper can be found <a href='https://arxiv.org/abs/2511.15981' target='_blank' rel='noopener noreferrer'>here</a>.
 <br>Mentor: Prof. Micheline Soley">
           <div class="tile-inner">
             <div class="tile-front"><h3>qDRIVE</h3></div>
@@ -757,8 +830,8 @@ impacts in parity-time reversal (PT) symmetry, optics, and nuclear physics. Pape
         </div>
 
         <div class="tile" data-title="Robotic Surgery" data-html="My aim was to develop an algorithm to calculate the shift in the position and orientation of the calyx between the pre-operative CT acquisition and the intra-operative patient orientation during the kidney stone removal surgery so that it can be taken into consideration by the robot arm during puncture process.
-For this I developed an algorithm, which generates the Digitally Rendered Radiograph of the input CT volume data at given angle of rotation of CT data.
-After the DRR generation the registration algorithm registers CARM and DRR to find the best possible pair with least error or maximum similarity so that the exact orientation of the calyx can be found out. A detailed report of this work can be found <a href='Files/comofi_report.pdf' target='_blank' rel='noopener noreferrer'>here</a>
+For this I wrote a ray-casting algorithm that generates Digitally Reconstructed Radiographs (DRRs) from the CT volume at any rotation angle, and parallelized it with Numba and PyCUDA, bringing generation time down from 70 minutes to 8 seconds.
+The registration step then matches the C-arm X-ray against the DRRs (using MSE, SSIM, NCC, and feature-based homography) to find the best match, so the exact orientation of the calyx can be found.
 <br>Mentor: Rakesh Sharma">
           <div class="tile-inner">
             <div class="tile-front"><h3>Robotic Surgery</h3></div>
