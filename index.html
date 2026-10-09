@@ -34,13 +34,6 @@
     font:16px/1.55 system-ui, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
   }
   body { overflow-x:hidden; }
-  body.interactive-mode {
-    background: #000;
-  }
-  body.interactive-mode .wrap {
-    max-width: none;
-    padding: 0;
-  }
   a { color:var(--accent); text-decoration:none; }
   a:hover { text-decoration:underline; }
   .wrap { max-width: 1200px; margin: 0 auto; padding: 24px; }
@@ -183,12 +176,10 @@ font-size: 1.6rem;
   body.choice-mode .quick-profile,
   body.choice-mode #tiles,
   body.choice-mode #contact,
-  body.choice-mode .journey-intro,
-  body.choice-mode #scroll3d { display:none; }
+  body.choice-mode #journey { display:none; }
 
   body.simple-mode .hero,
-  body.simple-mode .journey-intro,
-  body.simple-mode #scroll3d { display:none; }
+  body.simple-mode #journey { display:none; }
 
   body.interactive-mode .hero,
   body.interactive-mode .quick-profile,
@@ -235,173 +226,82 @@ font-size: 1.6rem;
   .link-list { display:grid; gap:.45rem; margin-top:.5rem; }
   .link-list a { display:inline-flex; gap:.45rem; align-items:center; }
 
-  /* Interactive journey */
-  .journey-intro {
-    width: min(92vw, 760px);
-    text-align:center;
-    margin: 0;
-    scroll-margin-top: 24px;
-	background: transparent;
-    pointer-events:auto;
+  /* Circuit journey */
+  .journey { max-width: 980px; margin: 24px auto 80px; scroll-margin-top: 24px; }
+  .circuit { position: relative; margin-top: 30px; }
+  .circuit::before, .wire-fill {
+    content: "";
+    position: absolute;
+    left: 47px;
+    top: 28px;
+    width: 2px;
   }
-  .journey-intro p {
-    color: var(--mut);
-    margin:.35rem auto 0;
-    max-width:760px;
-	background: transparent;
-	
-  }
-
-#scroll3d {
-  position: relative;
-  height: 650vh;
-  z-index: 0;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  background: #000;
-}
-.pin {
-  position: sticky;
-  top: 0;
-  height: 100vh;
-  min-height: 100vh;
-  width: 100vw;
-  margin-left: calc(50% - 50vw);
-  border-radius: 0;
-  border: none;
-  overflow: hidden;
-  background: #000;
-}
-  #webgl {
-    width:100%;
-    height:100%;
-    display:block;
+  .circuit::before { bottom: 28px; background: var(--line); }
+  .wire-fill { height: 0; background: var(--accent); }
+  .step {
     position: relative;
-    z-index: 0;
-    pointer-events: none;
+    display: grid;
+    grid-template-columns: 96px 1fr;
+    gap: 20px;
+    align-items: start;
+    margin: 0 0 30px;
   }
-  .vignette {
-    position:absolute;
-    inset:0;
-    pointer-events:none;
-    z-index:1;
-    background: radial-gradient(120% 120% at 50% 50%, rgba(0,0,0,0) 55%, rgba(0,0,0,.18) 100%);
+  .gate {
+    position: relative;
+    z-index: 1;
+    justify-self: center;
+    min-width: 56px;
+    height: 56px;
+    padding: 0 10px;
+    display: grid;
+    place-items: center;
+    border: 2px solid var(--line);
+    border-radius: 10px;
+    background: #ffffff;
+    color: var(--mut);
+    font: 600 1.05rem/1 "Cambria Math", "STIX Two Math", Georgia, serif;
+    white-space: nowrap;
+    transition: background .35s ease, border-color .35s ease, color .35s ease, box-shadow .35s ease;
   }
-
-  .overlay{
-    position:absolute;
-    inset:0;
-    display:flex;
-    flex-direction:column;
-    justify-content:space-between;
-    z-index:2;
-    pointer-events:none;
+  .gate svg { width: 30px; height: 30px; }
+  .step.lit .gate {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #ffffff;
+    box-shadow: 0 6px 18px rgba(47,95,179,.25);
   }
-  .top-stack {
-    pointer-events:auto;
-    align-self:center;
-    width:min(96vw, 1100px);
-    display:grid;
-    grid-template-columns:auto minmax(0, 1fr);
-    align-items:start;
-    gap:12px;
-    margin-top:14px;
+  .journey.ready .step .card { opacity: .35; transform: translateY(12px); transition: opacity .5s ease, transform .5s ease; }
+  .journey.ready .step.lit .card { opacity: 1; transform: none; }
+  .step-meta {
+    color: var(--mut);
+    font-size: .8rem;
+    font-weight: 600;
+    letter-spacing: .06em;
+    text-transform: uppercase;
   }
-  .hud {
-    pointer-events:auto;
-    margin-top:0;
-    border:1px solid var(--line);
-    background:var(--card);
-    border-radius:12px;
-    padding:8px 12px;
-    box-shadow:var(--shadow);
-    backdrop-filter: blur(8px);
-    font-size:.95rem;
-    display:grid;
-    grid-template-columns: auto minmax(0, 1fr);
-    gap:.6rem .75rem;
-    align-items:center;
-    min-width:0;
+  .step .card h3 { margin: .2rem 0 .45rem; }
+  .gate-note { color: var(--mut); font-size: .92rem; font-style: italic; margin-top: .55rem; }
+  .key-number {
+    display: inline-block;
+    margin-top: .6rem;
+    padding: .3rem .75rem;
+    border-radius: 999px;
+    background: #eef3fc;
+    color: #244c93;
+    font-size: .92rem;
+    font-weight: 600;
   }
-  .chapter-list {
-    display:flex;
-    gap:.6rem;
-    flex-wrap:wrap;
-    min-width:0;
+  .step-links { display: flex; flex-wrap: wrap; gap: .35rem 1.1rem; margin-top: .6rem; font-size: .95rem; }
+  .journey-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: .9rem; }
+  @media (max-width: 600px) {
+    .step { grid-template-columns: 56px 1fr; gap: 12px; }
+    .circuit::before, .wire-fill { left: 27px; top: 22px; }
+    .gate { min-width: 44px; height: 44px; padding: 0 6px; font-size: .85rem; }
+    .gate svg { width: 24px; height: 24px; }
   }
-  .hud-actions {
-    display:flex;
-    gap:.6rem;
-    flex-wrap:wrap;
-    justify-content:flex-end;
-    pointer-events:auto;
+  @media (prefers-reduced-motion: reduce) {
+    .gate, .journey.ready .step .card { transition: none; }
   }
-  .hud-actions .cta {
-    padding:.42rem .75rem;
-    box-shadow:none;
-    white-space:nowrap;
-  }
-  .jump {
-    cursor:pointer;
-    color:var(--ink);
-    border:1px solid var(--line);
-    padding:.25rem .55rem;
-    border-radius:8px;
-    background:rgba(255,255,255,.08);
-    transition:transform .1s ease;
-  }
-  .jump:hover { transform: translateY(-1px); }
-  .sp { opacity:.85 }
-
-  .panels {
-    pointer-events:none;
-    position:relative;
-    width:100%;
-    display:grid;
-    place-items:center;
-    margin-bottom:12px;
-  }
-  .journey-progress {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 8px;
-  z-index: 5;
-  background: rgba(255,255,255,.10);
-}
-
-#journeyProgressFill {
-  width: 0%;
-  height: 100%;
-  background: linear-gradient(90deg, #8db3ff, #dbe8ff);
-  box-shadow: 0 0 18px rgba(141,179,255,.85);
-  transition: width .12s linear;
-}
-  .panel {
-    pointer-events:none;
-    position:absolute;
-    bottom:16px;
-    width: min(96vw, 1100px);
-    text-align:left;
-    border:1px solid var(--line);
-    background:var(--card);
-    border-radius:14px;
-    padding:14px 16px;
-    box-shadow:var(--shadow);
-    backdrop-filter: blur(10px);
-    opacity:0;
-    transform: translateY(10px) scale(.985);
-    transition: opacity .35s ease, transform .35s ease;
-  }
-  .panel.show {
-    pointer-events:auto;
-    opacity:1;
-    transform:none;
-  }
-  .panel h3 { margin:.1rem 0 .35rem; letter-spacing:.2px; }
-  .panel p { margin:.2rem 0 0; color:#cfe0ff; }
-  .accent { color:var(--accent); }
 
   /* Tiles */
   .tile-grid {
@@ -496,9 +396,9 @@ font-size: 1.6rem;
     color: var(--mut);
   }
 
-  /* Light theme: landing card and Quick Profile (Interactive Journey stays dark) */
-  html:has(body.choice-mode), html:has(body.simple-mode) { background:#e9ebef; }
-  body.choice-mode, body.simple-mode {
+  /* Light theme for every view */
+  html:has(body.choice-mode), html:has(body.simple-mode), html:has(body.interactive-mode) { background:#e9ebef; }
+  body.choice-mode, body.simple-mode, body.interactive-mode {
     --ink:#14181f;
     --mut:#5a6272;
     --card:#ffffff;
@@ -522,20 +422,20 @@ font-size: 1.6rem;
   body.choice-mode .contact-strip a { color:var(--accent); }
   body.choice-mode .contact-strip a:hover { color:#1d3f7d; text-decoration:none; }
   body.choice-mode .choice-note { color:#7a8191; }
-  :is(body.choice-mode, body.simple-mode) .cta {
+  :is(body.choice-mode, body.simple-mode, body.interactive-mode) .cta {
     color:var(--ink);
     background:#ffffff;
     box-shadow:0 1px 2px rgba(20,24,31,.06);
   }
-  :is(body.choice-mode, body.simple-mode) .cta:hover { border-color:var(--accent); }
-  :is(body.choice-mode, body.simple-mode) .cta.primary {
+  :is(body.choice-mode, body.simple-mode, body.interactive-mode) .cta:hover { border-color:var(--accent); }
+  :is(body.choice-mode, body.simple-mode, body.interactive-mode) .cta.primary {
     color:#ffffff;
     background:var(--accent);
     border-color:var(--accent);
   }
-  :is(body.choice-mode, body.simple-mode) .cta.primary:hover { background:#244c93; }
-  body.simple-mode .card { background:#ffffff; backdrop-filter:none; }
-  body.simple-mode .card p { color:#3b4252; }
+  :is(body.choice-mode, body.simple-mode, body.interactive-mode) .cta.primary:hover { background:#244c93; }
+  :is(body.simple-mode, body.interactive-mode) .card { background:#ffffff; backdrop-filter:none; }
+  :is(body.simple-mode, body.interactive-mode) .card p { color:#3b4252; }
   body.simple-mode .tag { background:#f1f3f7; color:#3b4252; }
   body.simple-mode .social-icons a { background:#ffffff; color:var(--ink); }
   body.simple-mode .tile-front { background:#ffffff; }
@@ -555,25 +455,6 @@ font-size: 1.6rem;
     .hero-actions { justify-content:center; }
     
     .monogram { justify-self:center; }
-    .hud {
-      max-height: 126px;
-      overflow:auto;
-      grid-template-columns: 1fr;
-      justify-items:center;
-    }
-    .top-stack {
-      grid-template-columns: 1fr;
-      justify-items:center;
-    }
-    .chapter-list,
-    .hud-actions {
-      justify-content:center;
-      margin-left:0;
-    }
-    .pin {
-      height: 100vh;
-      min-height: 100vh;
-    }
   }
 </style>
 </head>
@@ -588,7 +469,7 @@ font-size: 1.6rem;
           <div>
             
             <h1>Atharva Vidwans</h1>
-            <div class="card-role">PhD Student · Quantum information science · UW–Madison</div>
+            <div class="card-role">PhD Student · Quantum information science · UW-Madison</div>
             <p>Making quantum algorithms practical</p>
             <div class="contact-strip">
 			<a href="mailto:atharvavidwans@wisc.edu"><i class="fa-solid fa-envelope"></i></a>
@@ -602,7 +483,7 @@ font-size: 1.6rem;
               <button class="cta mode-select" data-mode="interactive" type="button"><i class="fa-solid fa-rocket"></i> Enter Interactive Journey</button>
               <a class="cta" href="Files/Resume.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-lines"></i> Resume</a>
             </div>
-            <div class="choice-note">Choose the fast professional profile or the cinematic scroll-through version.</div>
+            <div class="choice-note">Choose the fast profile, or follow my journey drawn as a quantum circuit.</div>
 			
           </div>
           
@@ -613,7 +494,7 @@ font-size: 1.6rem;
     <section id="quick-profile" class="quick-profile" aria-label="Quick skimmable profile">
       <div class="section-head">
         <h2>Quick Profile</h2>
-        <p>For visitors who want the fast version: research focus, selected projects, papers, and contact links without going through the full scroll journey.</p>
+        <p>The fast version, with my research focus, selected projects, papers, and contact links.</p>
       </div>
       <div class="mode-bar">
         <button class="cta back-choice" type="button"><i class="fa-solid fa-arrow-left"></i> Back to choices</button>
@@ -624,7 +505,7 @@ font-size: 1.6rem;
         <article class="card">
           <h3>About Me</h3>
           <p>I am originally from Pune, India. I completed my undergraduate degree in Mechanical Engineering before transitioning into Physics and Quantum Computing through self-study, research internships, and competitive projects. Before beginning my PhD, I worked on autonomous robotic surgery systems focused on kidney stone treatment and later conducted research in quantum optimization and variational quantum algorithms.</p>
-          <p>My research is about making quantum algorithms practical by reducing the shots, queries, and circuit resources they need. At UW–Madison I work on Bayesian measurement schemes for imaginary-time evolution and on fault-tolerant resource estimation. In summer 2026 I developed adaptive shot allocation for gate set tomography at Argonne National Laboratory. Broadly, I am interested in quantum algorithm design, Hamiltonian simulation, and practical pathways toward useful fault-tolerant quantum computing.</p>
+          <p>My research is about making quantum algorithms practical by reducing the shots, queries, and circuit resources they need. At UW-Madison I work on Bayesian measurement schemes for imaginary-time evolution and on fault-tolerant resource estimation. In summer 2026 I developed adaptive shot allocation for gate set tomography at Argonne National Laboratory. Broadly, I am interested in quantum algorithm design, Hamiltonian simulation, and practical pathways toward useful fault-tolerant quantum computing.</p>
           <div class="tag-row">
             <span class="tag">Quantum algorithms</span>
             <span class="tag">FTQC</span>
@@ -637,7 +518,7 @@ font-size: 1.6rem;
         </article>
         <aside class="card">
           <h3>At a Glance</h3>
-          <p><strong>Role:</strong> PhD student, UW–Madison</p>
+          <p><strong>Role:</strong> PhD student, UW-Madison</p>
           <p><strong>PhD Advisor:</strong> Prof. Matthew Otten</p>
           <p><strong>Background:</strong> Mechanical Engineering(Undergrad) → Quantum Physics(Masters) → Quantum Chemistry(PhD)</p>
           <p><strong>Summer 2026:</strong> Givens Associate, Argonne National Laboratory</p>
@@ -707,81 +588,133 @@ font-size: 1.6rem;
 
     
 
-    <section id="scroll3d" aria-label="Scroll-driven 3D">
-      
-	  <div class="pin">
-        <canvas id="webgl"></canvas>
-		
-		
-		
-		<div class="journey-progress">
-			<div id="journeyProgressFill"></div>
-		</div>
-        <div class="vignette"></div>
+    <section id="journey" class="journey" aria-label="My journey, drawn as a quantum circuit">
+      <div class="section-head">
+        <h2>The Journey</h2>
+        <p>How I got from mechanical engineering to quantum algorithms, drawn as a quantum circuit. Scroll along the qubit.</p>
+      </div>
+      <div class="mode-bar">
+        <button class="cta back-choice" type="button"><i class="fa-solid fa-arrow-left"></i> Back to choices</button>
+        <button class="cta mode-select" data-mode="simple" type="button"><i class="fa-solid fa-bolt"></i> Switch to Quick Profile</button>
+      </div>
 
-        <div class="overlay">
-          <div class="top-stack">
-            <div class="hud-actions">
-              <button class="cta back-choice" type="button"><i class="fa-solid fa-arrow-left"></i> Back to choices</button>
-              <button class="cta mode-select" data-mode="simple" type="button"><i class="fa-solid fa-bolt"></i> Switch to Quick Profile</button>
-            </div>
-            <div class="hud">
-              <span class="sp">Chapters:</span>
-              <span class="chapter-list">
-                <button class="jump" data-target="0.00">Start</button>
-                <button class="jump" data-target="0.05">About Me</button>
-                <button class="jump" data-target="0.17">Undergrad</button>
-                <button class="jump" data-target="0.29">Robotic Surgery</button>
-                <button class="jump" data-target="0.41">Quantum Entry</button>
-                <button class="jump" data-target="0.53">Research Intern</button>
-                <button class="jump" data-target="0.65">Masters</button>
-                <button class="jump" data-target="0.77">PhD</button>
-                <button class="jump" data-target="0.89">Resume</button>
-              </span>
-            </div>
-          </div>
+      <div class="circuit">
+        <div class="wire-fill" aria-hidden="true"></div>
 
-          <div class="panels">
-            <div id="p-start"     class="panel"><h3 class="accent">Start</h3><p>Welcome aboard!! My name is Atharva Vidwans and I will take you through my life journey. Enjoy the ride!!!</p></div>
-            <div id="p-about"     class="panel"><h3 class="accent">About Me</h3><p>I am a third year PhD student at UW Madison. My research is in quantum algorithms, and in making them practical to run. Outside my research and academics, I like solving problems and putting pieces together, sometimes elegantly, sometimes with duct tape. I build, break, and rebuild until something interesting comes out. Outside of that cycle, I write blogs, play soccer and badminton, or buried in an Agatha Christie novel (my personal favourite novel: Murder of Roger Ackroyd).</p></div>
-            <div id="p-undergrad" class="panel"><h3 class="accent">Undergrad</h3><p>I completed my undergraduate degree in Mechanical Engineering, with a final year project focused on <strong>3D printing</strong>. Studying Mechanical Engineering gave me a unique perspective on problem solving, it was during these 4 years I became fascinated by the strange and elegant laws that govern the quantum world. This was my first introduction to quantum.</p></div>
-            <div id="p-robotic"   class="panel"><h3 class="accent">Autonomous Robotic Surgery</h3><p>After my undergraduate degree, I worked as a Research Intern at a startup in <strong>autonomous robotic surgery for treating kidney stones</strong> under the guidance of <strong>Rakesh Sharma</strong>. My work focused on registering pre-operative CT scans with live X-ray images using Digitally Reconstructed Radiographs (DRRs). Existing tools did not work on our data, so I wrote my own ray-casting DRR algorithm in Python and parallelized it with Numba and PyCUDA, bringing DRR generation time down from 70 minutes to 8 seconds.</p><p>Even while working in robotics, my self-study in quantum mechanics and quantum computing never stopped.</p></div>
-            <div id="p-quantum"   class="panel">
-              <h3 class="accent">Entry into Quantum Computing</h3>
-              <p>After enough studying and tinkering in Quantum Computing, I wanted to put my curiosity to the test, so I threw myself into quantum computing competitions, breaking things, fixing them, and occasionally even solving the problem. Along the way, I earned the <strong>IBM Quantum Developer (Associate)</strong> certification (<a href="https://www.credly.com/badges/22fd159d-7d25-4988-88ff-926a45c09da3" target="_blank" rel="noopener noreferrer">here</a>). With all these competitions and hackathons, I discovered that dedication isn’t just about smooth wins, it’s about the nights spent stuck on a bug, the papers re-read three times, and the stubborn joy of refusing to give up until something finally clicks.</p>
-              <p>Along the way I did few mini projects in quantum computing. Few of the projects code can be found here:
-                <a href="https://github.com/Atharva-Vidwans/VQC-with-Pennylane" target="_blank" rel="noopener noreferrer">QML using variational Quantum Classifier in Pennylane</a>,
-                <a href="https://github.com/Atharva-Vidwans/Payoff-optimization-in-options-using-Quantum-Amplitude-Estimation" target="_blank" rel="noopener noreferrer">Payoff optimization in Options using Quantum Amplitude Estimation</a>,
-                <a href="https://github.com/Atharva-Vidwans/QUBO-formulation-of-Crop-Yield-problem" target="_blank" rel="noopener noreferrer">QUBO formulation for crop yield problem</a>.
-              </p>
-              <p>Articles for all these problems can be found on my Medium page <a href="https://medium.com/@atharvavidwans" target="_blank" rel="noopener noreferrer">here</a>.</p>
+        <div class="step">
+          <div class="gate" aria-hidden="true">|0&#10217;</div>
+          <article class="card">
+            <div class="step-meta">Initial state</div>
+            <h3>Hi, I'm Atharva</h3>
+            <p>I'm a third-year PhD student at UW-Madison working on making quantum algorithms practical. This page walks through how I got here, one gate at a time.</p>
+            <p>Outside research I write on Medium, play soccer and badminton, and reread Agatha Christie (my favourite is <em>The Murder of Roger Ackroyd</em>).</p>
+          </article>
+        </div>
+
+        <div class="step">
+          <div class="gate" aria-hidden="true">H</div>
+          <article class="card">
+            <div class="step-meta">2015 to 2019 &middot; Pune, India</div>
+            <h3>Mechanical Engineering</h3>
+            <p>I studied Mechanical Engineering at Savitribai Phule Pune University, with a final-year project on 3D printing. Somewhere along the way I got hooked on the strange rules of the quantum world and started teaching myself.</p>
+            <p class="gate-note">A Hadamard gate, one path split into two.</p>
+          </article>
+        </div>
+
+        <div class="step">
+          <div class="gate" aria-hidden="true"><span>R<sub>z</sub>(&theta;)</span></div>
+          <article class="card">
+            <div class="step-meta">2020 &middot; Comofi Medtech</div>
+            <h3>Autonomous Robotic Surgery</h3>
+            <p>I worked on robot-assisted kidney stone surgery, registering pre-operative CT scans with live X-ray images. Existing tools failed on our data, so I wrote my own ray-casting DRR generator and parallelized it with Numba and PyCUDA.</p>
+            <span class="key-number">70 min &rarr; 8 sec per DRR</span>
+            <p class="gate-note">A rotation, like finding the angle that makes two images agree. Mentor: Rakesh Sharma.</p>
+          </article>
+        </div>
+
+        <div class="step">
+          <div class="gate" aria-hidden="true">X</div>
+          <article class="card">
+            <div class="step-meta">2020 to 2022 &middot; Self-study</div>
+            <h3>Flipping to Quantum</h3>
+            <p>I threw myself into quantum computing challenges and hackathons, and earned the <a href="https://www.credly.com/badges/22fd159d-7d25-4988-88ff-926a45c09da3" target="_blank" rel="noopener noreferrer">IBM Quantum Developer certification</a>. I also built small projects and wrote about them on <a href="https://medium.com/@atharvavidwans" target="_blank" rel="noopener noreferrer">Medium</a>.</p>
+            <span class="key-number">Rank 4 globally, IBM Qiskit Challenge 2021</span>
+            <div class="step-links">
+              <a href="https://github.com/Atharva-Vidwans/VQC-with-Pennylane" target="_blank" rel="noopener noreferrer">Variational quantum classifier</a>
+              <a href="https://github.com/Atharva-Vidwans/Payoff-optimization-in-options-using-Quantum-Amplitude-Estimation" target="_blank" rel="noopener noreferrer">Options pricing with QAE</a>
+              <a href="https://github.com/Atharva-Vidwans/QUBO-formulation-of-Crop-Yield-problem" target="_blank" rel="noopener noreferrer">Crop-yield QUBO</a>
             </div>
-            <div id="p-mini"      class="panel">
-              <h3 class="accent">Research Intern</h3>
-              <p>I began my journey in quantum computing as a research intern under <strong>Dr. Pawel Gora</strong> at the University of Warsaw, where I worked on <strong>layering VQE and FVQE</strong> to tackle the <strong>Vehicle Routing Problem and its variants</strong>. It was an exciting challenge, my first taste of applying quantum ideas to real-world problems. I even had the chance to present this work at the <strong>13th Warsaw IT Days Conference in 2022</strong>, which was both nerve-wracking and unforgettable. The slides from that talk can be viewed <a href="https://www.informatyka.agh.edu.pl/media/uploads/kqis-55-pawel-gora-26-04-2022-slides.pdf" target="_blank" rel="noopener noreferrer">here</a>.</p>
-              <p>This experience was a turning point. It convinced me that quantum computing wasn’t just a passing interest but it was the field I wanted to dive deeper into. That realization ultimately led me to pursue a Master’s program in Physics at UW Madison, where I could continue exploring this fascinating world.</p>
+            <p class="gate-note">A Pauli-X gate, a full bit flip from robotics to quantum.</p>
+          </article>
+        </div>
+
+        <div class="step">
+          <div class="gate" aria-hidden="true"><span>R<sub>y</sub>(&theta;)</span></div>
+          <article class="card">
+            <div class="step-meta">2021 to 2022 &middot; University of Warsaw</div>
+            <h3>First Research Internship</h3>
+            <p>With Dr. Pawel Gora I formulated the vehicle routing problem as a QUBO and solved it with Layer-VQE and Filtering-VQE. Presenting it at the 13th Warsaw IT Days convinced me to go all-in on quantum, which led me to a Master's at UW-Madison.</p>
+            <div class="step-links">
+              <a href="https://www.informatyka.agh.edu.pl/media/uploads/kqis-55-pawel-gora-26-04-2022-slides.pdf" target="_blank" rel="noopener noreferrer">Talk slides</a>
             </div>
-            <div id="p-ms"        class="panel"><h3 class="accent">Masters</h3><p>During my Master’s in Physics at UW Madison, I worked under <strong>Prof. Micheline Soley</strong> and 
-<strong>Prof. Shimon Kolkowitz</strong> on multiple research projects spanning quantum algorithm 
-development and error correction. I investigated molecular resonances and developed a quantum 
-algorithm called <strong>qDRIVE</strong>, which incorporated <strong>Complex Absorbing Potentials</strong> to 
-identify resonance states (<a href="https://arxiv.org/abs/2511.15981" target="_blank" rel="noopener noreferrer">paper</a>). I also contributed to the design and implementation of 
-<strong>Bayesian Iterative Quantum Amplitude Estimation (BIQAE)</strong>, where Bayesian inference was
-used to obtain rigorous interval estimates with fewer measurements than existing methods, now published
-in <em>Quantum</em>
-(<a href="https://arxiv.org/abs/2507.23074" target="_blank" rel="noopener noreferrer">paper</a>).
-In parallel, I explored <strong>ADAPT-VQE</strong>, an adaptive ansatz construction method for ground-state 
-energy estimation, analyzing its efficiency and limitations compared to traditional unitary 
-coupled-cluster approaches. Additionally, I built <strong>surface-code</strong> logical qubits in Qiskit, with X-cut and Z-cut
-qubits and logical X, Y, Z, and H gates, and compared their fidelity against physical qubits under
-gate and measurement noise
-(<a href="Files/SurfaceCodes.pdf" target="_blank" rel="noopener noreferrer">report</a>).
-Collectively, these projects gave me broad experience in algorithm design, performance analysis,
-and error correction, preparing me to tackle both theoretical and practical challenges
-in quantum computing.</p></div>
-            <div id="p-phd"       class="panel"><h3 class="accent">PhD</h3><p>I am now in the third year of my PhD in quantum chemistry, working under the mentorship of <strong>Prof. Matthew Otten</strong>. My research is about making quantum algorithms cheaper to run. I developed a <strong>Bayesian measurement scheme for imaginary-time evolution (DB-QITE / PDBQITE)</strong> that reuses the measurement outcomes the original method throws away, cutting the queries needed per energy estimate by 4.2× for LiH and 9.8× for BeH<sub>2</sub> in simulation. I also build <strong>fault-tolerant resource estimates</strong> using the Fluid Allocation of Surface code Qubits (FLASQ) model and double-factorized Trotter circuits.</p><p>In summer 2026 I was a <strong>Givens Associate at Argonne National Laboratory</strong> with Dr. Matt Menickelly and Dr. Jeffrey Larson. There I developed an <strong>adaptive shot-allocation method for gate set tomography</strong> that needs about 2.1× (one qubit) and 2.7× (two qubits) fewer shots for the same gate accuracy.</p></div>
-            <div id="p-future"    class="panel"><h3 class="accent">Resume</h3><p>Click <a href="Files/Resume.pdf" target="_blank" rel="noopener noreferrer">here</a> for resume</p></div>
+            <p class="gate-note">A parameterized rotation, the building block of every VQE.</p>
+          </article>
+        </div>
+
+        <div class="step">
+          <div class="gate" aria-hidden="true">S</div>
+          <article class="card">
+            <div class="step-meta">2022 to 2024 &middot; M.S. Physics, UW-Madison</div>
+            <h3>Algorithms and Error Correction</h3>
+            <p>With Prof. Micheline Soley I co-developed <strong>qDRIVE</strong>, which finds molecular resonances using complex absorbing potentials and VQE, and <strong>BIQAE</strong>, which brings Bayesian inference to quantum amplitude estimation. With Prof. Shimon Kolkowitz I built surface-code logical qubits in Qiskit.</p>
+            <span class="key-number">BIQAE published in <em>Quantum</em> (2026)</span>
+            <div class="step-links">
+              <a href="https://arxiv.org/abs/2507.23074" target="_blank" rel="noopener noreferrer">BIQAE paper</a>
+              <a href="https://arxiv.org/abs/2511.15981" target="_blank" rel="noopener noreferrer">qDRIVE paper</a>
+              <a href="Files/SurfaceCodes.pdf" target="_blank" rel="noopener noreferrer">Surface-code report</a>
+            </div>
+            <p class="gate-note">A Clifford gate, cheap to run on a surface code, like the logical gates I built.</p>
+          </article>
+        </div>
+
+        <div class="step">
+          <div class="gate" aria-hidden="true">T</div>
+          <article class="card">
+            <div class="step-meta">2024 to present &middot; Ph.D., UW-Madison</div>
+            <h3>Making Algorithms Cheaper to Run</h3>
+            <p>With Prof. Matthew Otten I work on reducing the measurements and resources quantum algorithms need, through Bayesian measurement schemes for imaginary-time evolution and fault-tolerant resource estimates for chemistry.</p>
+            <p class="gate-note">The expensive non-Clifford gate. Its count sets the cost of a fault-tolerant algorithm, which is exactly what resource estimation measures.</p>
+          </article>
+        </div>
+
+        <div class="step">
+          <div class="gate" aria-hidden="true">&radic;X</div>
+          <article class="card">
+            <div class="step-meta">Summer 2026 &middot; Argonne National Laboratory</div>
+            <h3>Adaptive Gate Set Tomography</h3>
+            <p>As a Givens Associate with Dr. Matt Menickelly and Dr. Jeffrey Larson, I built an adaptive shot-allocation method for gate set tomography. Instead of measuring every circuit equally, it sends shots where they are most informative.</p>
+            <span class="key-number">2.1&times; (1 qubit) and 2.7&times; (2 qubits) fewer shots</span>
+            <p class="gate-note">The X(&pi;/2) gate, one of the gates that gate set tomography characterizes.</p>
+          </article>
+        </div>
+
+        <div class="step">
+          <div class="gate" aria-label="Measurement">
+            <svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true">
+              <path d="M5 22a11 11 0 0 1 22 0"/>
+              <path d="M16 22l7-9"/>
+            </svg>
           </div>
+          <article class="card">
+            <div class="step-meta">Measurement</div>
+            <h3>The State So Far</h3>
+            <p>I'm looking for a quantum computing research internship for Summer 2027. If my work sounds relevant to your team, I'd love to talk.</p>
+            <div class="journey-actions">
+              <a class="cta primary" href="Files/Resume.pdf" target="_blank" rel="noopener noreferrer"><i class="fa-solid fa-file-lines"></i> Resume</a>
+              <a class="cta" href="mailto:atharvavidwans@wisc.edu"><i class="fa-solid fa-envelope"></i> Email</a>
+              <button class="cta mode-select" data-mode="simple" type="button"><i class="fa-solid fa-bolt"></i> Quick Profile</button>
+            </div>
+          </article>
         </div>
       </div>
     </section>
@@ -800,7 +733,7 @@ in quantum computing.</p></div>
 
         <div class="tile"
           data-title="BIQAE"
-          data-html="We built a unified statistical framework for quantum amplitude estimation and used it to bring Bayesian inference into Iterative Quantum Amplitude Estimation, with rigorous interval estimates at every iteration. BIQAE needs about 14% fewer samples than IQAE across six orders of magnitude in target accuracy, and 8–13% fewer for ground-state energies of H<sub>2</sub>, LiH, BeH<sub>2</sub>, and HF. Proofs and simulations show the gain comes from the Bayesian step itself. Published in <em>Quantum</em> (2026); I am co-first author. Paper can be found <a href='https://arxiv.org/abs/2507.23074' target='_blank' rel='noopener noreferrer'>here</a>.
+          data-html="We built a unified statistical framework for quantum amplitude estimation and used it to bring Bayesian inference into Iterative Quantum Amplitude Estimation, with rigorous interval estimates at every iteration. BIQAE needs about 14% fewer samples than IQAE across six orders of magnitude in target accuracy, and 8 to 13% fewer for ground-state energies of H<sub>2</sub>, LiH, BeH<sub>2</sub>, and HF. Proofs and simulations show the gain comes from the Bayesian step itself. Published in <em>Quantum</em> (2026), and I am co-first author. Paper can be found <a href='https://arxiv.org/abs/2507.23074' target='_blank' rel='noopener noreferrer'>here</a>.
 		  <br>Mentors: Prof. Yazhen Wang and Prof. Micheline Soley">
           <div class="tile-inner">
             <div class="tile-front">
@@ -853,15 +786,13 @@ The registration step then matches the C-arm X-ray against the DRRs (using MSE, 
     </div>
   </div>
 
-  <script src="https://unpkg.com/three@0.159.0/build/three.min.js"></script>
-
   <script>
   // Choice gate
   (function(){
     function setMode(mode){
       document.body.classList.remove('choice-mode', 'simple-mode', 'interactive-mode');
       document.body.classList.add(mode + '-mode');
-      const target = mode === 'simple' ? document.getElementById('quick-profile') : document.getElementById('scroll3d');
+      const target = mode === 'simple' ? document.getElementById('quick-profile') : document.getElementById('journey');
       if (target) target.scrollIntoView({ behavior: 'auto', block: 'start' });
       setTimeout(() => window.dispatchEvent(new Event('resize')), 100);
     }
@@ -906,357 +837,33 @@ The registration step then matches the C-arm X-ray against the DRRs (using MSE, 
   </script>
 
   <script>
-  // Interactive Three.js journey
+  // Circuit journey: light each gate and fill the wire as the reader scrolls
   (function(){
-    const canvas = document.getElementById('webgl');
-    const sec = document.getElementById('scroll3d');
-    if (!canvas || !sec || !window.THREE) return;
+    const journey = document.getElementById('journey');
+    if (!journey) return;
+    const circuit = journey.querySelector('.circuit');
+    const fill = journey.querySelector('.wire-fill');
+    const steps = Array.from(journey.querySelectorAll('.step'));
+    journey.classList.add('ready');
 
-    const renderer = new THREE.WebGLRenderer({ canvas, antialias:true, alpha:false });
-    renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 1.75));
-    renderer.outputColorSpace = THREE.SRGBColorSpace;
-    renderer.toneMapping = THREE.ACESFilmicToneMapping;
-    renderer.toneMappingExposure = 1.15;
-
-    const scene = new THREE.Scene();
-    scene.fog = new THREE.FogExp2(0x070a12, 0.010);
-
-    const camera = new THREE.PerspectiveCamera(62, 1, 0.1, 4000);
-    scene.add(new THREE.HemisphereLight(0x89aaff, 0x07101f, 0.55));
-
-    const key = new THREE.DirectionalLight(0xeaf2ff, 1.1);
-    key.position.set(80, 140, 100);
-    scene.add(key);
-
-    function makeRoundSprite(size=256, color='255,255,255', inner=1, outer=0){
-      const c = document.createElement('canvas');
-      c.width = c.height = size;
-      const ctx = c.getContext('2d');
-      const g = ctx.createRadialGradient(size/2,size/2,0,size/2,size/2,size/2);
-      g.addColorStop(0, `rgba(${color},${inner})`);
-      g.addColorStop(1, `rgba(${color},${outer})`);
-      ctx.fillStyle = g;
-      ctx.fillRect(0,0,size,size);
-      const tex = new THREE.CanvasTexture(c);
-      tex.minFilter = THREE.LinearFilter;
-      tex.magFilter = THREE.LinearFilter;
-      return tex;
+    function update(){
+      if (!document.body.classList.contains('interactive-mode')) return;
+      const atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+      const mark = atBottom ? Infinity : window.innerHeight * 0.6;
+      steps.forEach(step => {
+        step.classList.toggle('lit', step.getBoundingClientRect().top < mark);
+      });
+      const box = circuit.getBoundingClientRect();
+      const reach = atBottom ? box.height : mark - box.top - 28;
+      fill.style.height = Math.max(0, Math.min(box.height - 56, reach)) + 'px';
     }
 
-    function makePlanetTexture(size=512, hue=210){
-      const c = document.createElement('canvas');
-      c.width = c.height = size;
-      const ctx = c.getContext('2d');
-
-      const grad = ctx.createRadialGradient(size*.34, size*.30, 10, size*.5, size*.5, size*.75);
-      grad.addColorStop(0, `hsl(${hue}, 85%, 78%)`);
-      grad.addColorStop(.45, `hsl(${hue}, 65%, 45%)`);
-      grad.addColorStop(1, `hsl(${hue+22}, 70%, 18%)`);
-      ctx.fillStyle = grad;
-      ctx.fillRect(0,0,size,size);
-
-      ctx.globalAlpha = .23;
-      for(let y=0; y<size; y+=18){
-        ctx.fillStyle = `hsl(${hue + Math.sin(y*.045)*28}, 80%, ${45 + Math.sin(y*.085)*14}%)`;
-        ctx.fillRect(0, y + Math.sin(y*.08)*10, size, 5 + Math.random()*11);
-      }
-
-      ctx.globalAlpha = .17;
-      for(let i=0; i<90; i++){
-        ctx.beginPath();
-        ctx.arc(Math.random()*size, Math.random()*size, Math.random()*2.7 + .8, 0, Math.PI*2);
-        ctx.fillStyle = `hsl(${hue+10}, 90%, 85%)`;
-        ctx.fill();
-      }
-
-      ctx.globalAlpha = 1;
-      const tex = new THREE.CanvasTexture(c);
-      tex.colorSpace = THREE.SRGBColorSpace;
-	  
-      return tex;
-    }
-
-    // Sky dome
-    const sky = new THREE.Mesh(
-      new THREE.SphereGeometry(3000, 32, 16),
-      new THREE.ShaderMaterial({
-        side: THREE.BackSide,
-        depthWrite:false,
-        uniforms:{
-          top:{value:new THREE.Color(0x162b60)},
-          bottom:{value:new THREE.Color(0x070a12)}
-        },
-        vertexShader:`varying vec3 vPos;
-          void main(){
-            vPos=position;
-            gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);
-          }`,
-        fragmentShader:`varying vec3 vPos;
-          uniform vec3 top;
-          uniform vec3 bottom;
-          void main(){
-            float h=normalize(vPos).y*.5+.5;
-            gl_FragColor=vec4(mix(bottom, top, pow(h,1.35)),1.0);
-          }`
-      })
-    );
-    scene.add(sky);
-
-    // Stars
-    const STARS = 3400;
-    const starGeo = new THREE.BufferGeometry();
-    const starPos = new Float32Array(STARS*3);
-    const starSize = new Float32Array(STARS);
-    for(let i=0;i<STARS;i++){
-      starPos[i*3] = (Math.random()-.5)*2500;
-      starPos[i*3+1] = Math.random()*1150 - 100;
-      starPos[i*3+2] = (Math.random()-.5)*2500;
-      starSize[i] = 4 + Math.random()*8;
-    }
-    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos,3));
-    starGeo.setAttribute('aSize', new THREE.BufferAttribute(starSize,1));
-
-    const starMat = new THREE.ShaderMaterial({
-      transparent:true,
-      depthWrite:false,
-      blending:THREE.AdditiveBlending,
-      uniforms:{
-        uTime:{value:0},
-        uTex:{value:makeRoundSprite(128,'255,255,255',1,0)}
-      },
-      vertexShader:`attribute float aSize;
-        varying float vBlink;
-        uniform float uTime;
-        void main(){
-          vBlink=.55+.45*sin(uTime*2.0+position.x*.02+position.z*.025);
-          vec4 mv=modelViewMatrix*vec4(position,1.0);
-          gl_PointSize=aSize*(300.0/-mv.z);
-          gl_Position=projectionMatrix*mv;
-        }`,
-      fragmentShader:`uniform sampler2D uTex;
-        varying float vBlink;
-        void main(){
-          vec4 c=texture2D(uTex, gl_PointCoord);
-          gl_FragColor=vec4(c.rgb*(.8+.65*vBlink), c.a);
-        }`
+    window.addEventListener('scroll', update, { passive: true });
+    window.addEventListener('resize', update);
+    document.querySelectorAll('.mode-select').forEach(btn => {
+      btn.addEventListener('click', () => setTimeout(update, 50));
     });
-
-    const stars = new THREE.Points(starGeo, starMat);
-    scene.add(stars);
-
-    // Light dust
-    const dustCount = 900;
-    const dustGeo = new THREE.BufferGeometry();
-    const dustPos = new Float32Array(dustCount*3);
-    for(let i=0;i<dustCount;i++){
-      dustPos[i*3] = (Math.random()-.5)*1200;
-      dustPos[i*3+1] = Math.random()*550 - 80;
-      dustPos[i*3+2] = (Math.random()-.5)*1200;
-    }
-    dustGeo.setAttribute('position', new THREE.BufferAttribute(dustPos,3));
-    const dust = new THREE.Points(
-      dustGeo,
-      new THREE.PointsMaterial({
-        map: makeRoundSprite(64, '180,220,255', .75, 0),
-        color:0xaed1ff,
-        size:2.7,
-        transparent:true,
-        opacity:.28,
-        depthWrite:false,
-        blending:THREE.AdditiveBlending
-      })
-    );
-    scene.add(dust);
-
-    // Camera/story path
-    const pts = [
-      new THREE.Vector3(  0,  8,   70),
-      new THREE.Vector3( 24, 12,   20),
-      new THREE.Vector3( -6, 16,  -25),
-      new THREE.Vector3(-34, 14,  -70),
-      new THREE.Vector3(-10, 12, -110),
-      new THREE.Vector3( 36, 10, -150),
-      new THREE.Vector3( 14, 12, -190),
-      new THREE.Vector3(-28, 11, -235),
-      new THREE.Vector3(-12, 14, -285),
-      new THREE.Vector3( 22, 12, -330)
-    ];
-    const curve = new THREE.CatmullRomCurve3(pts, false, 'catmullrom', 0.18);
-    const T_END = 0.89;
-
-    // Glowing route/ribbon
-    const ribbonPts = [];
-    for(let i=0;i<=220;i++) ribbonPts.push(curve.getPointAt((i/220)*T_END));
-    const ribbon = new THREE.Mesh(
-      new THREE.TubeGeometry(new THREE.CatmullRomCurve3(ribbonPts), 260, .28, 8, false),
-      new THREE.MeshBasicMaterial({ color:0x6f98ff, transparent:true, opacity:.22 })
-    );
-    scene.add(ribbon);
-
-    // Story planets
-    const PLANET_TS = [0.05,0.17,0.29,0.41,0.53,0.65,0.77,0.89];
-    const planets = [];
-    const halos = [];
-    const rings = [];
-
-    PLANET_TS.forEach((t,i)=>{
-      const pos = curve.getPointAt(t);
-      const hue = 200 + i*18;
-      const scale = 1 + Math.sin(i*1.25)*.18;
-
-      const planet = new THREE.Mesh(
-        new THREE.SphereGeometry(2.75, 56, 36),
-        new THREE.MeshStandardMaterial({
-          map: makePlanetTexture(512,hue),
-          roughness:.72,
-          metalness:.02
-        })
-      );
-      planet.position.copy(pos);
-      planet.scale.setScalar(scale);
-      planet.userData.spin = .002 + Math.random()*.002;
-      scene.add(planet);
-      planets.push(planet);
-
-      const halo = new THREE.Sprite(
-        new THREE.SpriteMaterial({
-          map:makeRoundSprite(512,'120,170,255',.18,0),
-          color:0x8db3ff,
-          transparent:true,
-          opacity:.9,
-          depthWrite:false,
-          blending:THREE.AdditiveBlending
-        })
-      );
-      halo.position.copy(pos);
-      halo.scale.setScalar(24*scale);
-      scene.add(halo);
-      halos.push({ halo, base:24*scale });
-
-      if(i % 2 === 1){
-        const ring = new THREE.Mesh(
-          new THREE.RingGeometry(3.6*scale, 5.1*scale, 88),
-          new THREE.MeshBasicMaterial({
-            color:0x9bbaff,
-            transparent:true,
-            opacity:.25,
-            side:THREE.DoubleSide
-          })
-        );
-        ring.position.copy(pos);
-        ring.rotation.x = Math.PI/2.15;
-        ring.rotation.z = i*.4;
-        scene.add(ring);
-        rings.push(ring);
-      }
-    });
-
-    // Subtle spacecraft guide
-    
-
-    const PANELS = [
-      { id:'p-start', t:0.00 },
-      { id:'p-about', t:0.05 },
-      { id:'p-undergrad', t:0.17 },
-      { id:'p-robotic', t:0.29 },
-      { id:'p-quantum', t:0.41 },
-      { id:'p-mini', t:0.53 },
-      { id:'p-ms', t:0.65 },
-      { id:'p-phd', t:0.77 },
-      { id:'p-future', t:0.89 }
-    ];
-    const panelEls = Object.fromEntries(PANELS.map(p => [p.id, document.getElementById(p.id)]));
-
-    function setPanelVisibility(t){
-      let nearest = PANELS[0];
-      let best = Infinity;
-      for(const p of PANELS){
-        const d = Math.abs(t-p.t);
-        if(d < best){
-          best = d;
-          nearest = p;
-        }
-      }
-      for(const p of PANELS){
-        panelEls[p.id]?.classList.toggle('show', p.id === nearest.id);
-      }
-    }
-
-    function onResize(){
-      const rect = canvas.getBoundingClientRect();
-      const w = rect.width || canvas.parentElement.clientWidth || 800;
-      const h = rect.height || canvas.parentElement.clientHeight || 500;
-      renderer.setSize(w,h,false);
-      camera.aspect = w/h;
-      camera.updateProjectionMatrix();
-    }
-    window.addEventListener('resize', onResize);
-    onResize();
-
-    function scrollProgress(){
-      const sc = window.scrollY || window.pageYOffset;
-      const top = sec.offsetTop;
-      const span = sec.offsetHeight - window.innerHeight;
-      if(span <= 0) return 0;
-      return Math.max(0, Math.min(1, (sc-top)/span)) * T_END;
-    }
-
-    function getCameraFrame(t){
-      const p = curve.getPointAt(t);
-      const ahead = curve.getPointAt(Math.min(T_END, t+.025));
-      const dir = ahead.clone().sub(p).normalize();
-      const eye = p.clone().add(new THREE.Vector3(0, 3.2, 0));
-      const target = p.clone().add(dir.multiplyScalar(10)).add(new THREE.Vector3(0, 2.7, 0));
-      return { position:eye, target };
-    }
-
-    function scrollToT(t){
-      const top = sec.offsetTop;
-      const span = sec.offsetHeight - window.innerHeight;
-      const clamped = Math.max(0, Math.min(T_END, t));
-      window.scrollTo({ top: top + (clamped/T_END)*span, behavior:'smooth' });
-    }
-
-    document.querySelectorAll('.jump').forEach(btn=>{
-      btn.addEventListener('click', ()=>scrollToT(parseFloat(btn.dataset.target || '0')));
-    });
-
-    let tCurrent = 0;
-    let time = 0;
-
-    function animate(){
-  requestAnimationFrame(animate);
-  time += .016;
-
-  const tTarget = document.body.classList.contains('interactive-mode') ? scrollProgress() : 0;
-
-  const progressFill = document.getElementById('journeyProgressFill');
-  if (progressFill) {
-    progressFill.style.width = `${(tTarget / T_END) * 100}%`;
-  }
-
-  tCurrent += (tTarget - tCurrent)*.08;
-
-  const frame = getCameraFrame(tCurrent);
-  camera.position.copy(frame.position);
-  camera.lookAt(frame.target);
-
-  stars.rotation.y += .00025;
-  dust.rotation.y += .00016;
-  starMat.uniforms.uTime.value = time;
-
-  planets.forEach(p=>p.rotation.y += p.userData.spin);
-  halos.forEach(h=>h.halo.scale.setScalar(h.base + Math.sin(time*1.2)*.7));
-  rings.forEach(r=>r.rotation.z += .0012);
-
-  const forward = frame.target.clone().sub(frame.position).normalize();
-  const side = new THREE.Vector3().crossVectors(forward, camera.up).normalize();
-
-  setPanelVisibility(tCurrent);
-  renderer.render(scene,camera);
-}
-
-    animate();
+    update();
   })();
   </script>
 </body>
