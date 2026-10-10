@@ -419,8 +419,14 @@ font-size: 1.6rem;
   }
   body.choice-mode .hero-card::before { border-color:#eef0f4; border-radius:12px; }
   body.choice-mode .card-role { color:#3b4252; }
-  body.choice-mode .contact-strip a { color:var(--accent); }
-  body.choice-mode .contact-strip a:hover { color:#1d3f7d; text-decoration:none; }
+  body.choice-mode .contact-strip a { color:#3b4252; transition:color .15s ease; }
+  body.choice-mode .contact-strip a:hover,
+  body.choice-mode .contact-strip a:focus-visible { color:var(--accent); text-decoration:none; }
+  /* Each icon shows its own brand color on hover */
+  body.choice-mode .contact-strip a[href*="github.com"]:is(:hover, :focus-visible) { color:#181717; }
+  body.choice-mode .contact-strip a[href*="linkedin.com"]:is(:hover, :focus-visible) { color:#0a66c2; }
+  body.choice-mode .contact-strip a[href*="medium.com"]:is(:hover, :focus-visible) { color:#000000; }
+  body.choice-mode .contact-strip a[href*="scholar.google"]:is(:hover, :focus-visible) { color:#4285f4; }
   body.choice-mode .choice-note { color:#7a8191; }
   :is(body.choice-mode, body.simple-mode, body.interactive-mode) .cta {
     color:var(--ink);
@@ -522,6 +528,7 @@ font-size: 1.6rem;
           <p><strong>PhD Advisor:</strong> Prof. Matthew Otten</p>
           <p><strong>Background:</strong> Mechanical Engineering(Undergrad) → Quantum Physics(Masters) → Quantum Chemistry(PhD)</p>
           <p><strong>Summer 2026:</strong> Givens Associate, Argonne National Laboratory</p>
+          <p><strong>FASTMath:</strong> 2026 Student Cohort (DOE SciDAC Institute)</p>
           <p><strong>Location:</strong> Madison, Wisconsin</p>
           <p><strong>Looking for:</strong> Quantum computing research internship, Summer 2027</p>
         </aside>
